@@ -206,177 +206,207 @@ $siteMenu = [
 <head>
 <meta charset="UTF-8">
 <title>Plan du site cours-reseaux.fr</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- Bootstraps (identiques au site d’origine) -->
+  <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/spacelab/bootstrap.min.css">
+
+  <!-- Google Fonts – Inter -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" 
+        rel="stylesheet">
+
 <style>
-:root{
-    --brand: #4a8fe7;
+/* === Style parfaitement aligné avec cours-reseaux_homepage_v1 === */
+
+:root{ 
+    --brand: #4a8fe7; 
     --muted: #6c757d;
     --glass: rgba(255,255,255,0.06);
 }
-body{font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
-body {
-    background: linear-gradient(
-        180deg,
-        #eef4fa 0%,
-        #f7faff 100%
-    );
-}
-.hero{padding:2rem; background: linear-gradient(180deg, rgba(74,143,231,0.08), rgba(10,29,66,0.02)); text-align:center;}
-.card-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1rem; margin-top:2rem;}
-.feature-card{padding:1rem; border-radius:12px; background:var(--brand); color:white; cursor:pointer; transition: transform .3s, box-shadow .3s; text-align:center;}
-.feature-card:hover{transform:translateY(-6px); box-shadow:0 8px 25px rgba(0,0,0,0.12);}
-.back-btn{margin-bottom:1rem;}
-.feature-card-disabled {
-    background: rgba(74,143,231,0.35); /* teinte plus claire mais toujours colorée */
-    color: #ffffff;                     /* texte blanc éclatant */
-    font-weight: 700;                   /* texte en gras */
-    cursor: default;
-    opacity: 0.95;                      /* légèrement transparent pour différencier */
-    pointer-events: none;               /* interdit tout clic */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* subtile ombre pour garder effet carte */
-    transition: none;                   /* pas d'animation hover */
-    text-align: center;
-    padding: 1rem;
-    border-radius: 12px;
-}
-.hero h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(90deg, #4a8fe7, #18d1d1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+body{
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: linear-gradient(180deg, #eef4fa 0%, #f7faff 100%);
 }
 
-.hero p {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #1a2b4c;
-    background: rgba(74,143,231,0.1);
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* HERO identique au site d'origine */
+.hero{
+    padding:4rem 0;
+    background: linear-gradient(180deg, rgba(74,143,231,0.08), rgba(10,29,66,0.02));
+    text-align:center;
+}
+
+/* Titre centré mais style original conservé */
+.hero h1{
+    font-size:2.8rem;
+    font-weight:800;
+    color:#1a2b4c;
+}
+
+/* Sous-titre cohérent */
+.hero p{
+    font-size:1.2rem;
+    font-weight:500;
+    color:#2c3e55;
+    opacity:0.9;
+}
+
+/* GRID simple comme l'origine */
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:1rem;
+}
+
+/* CARDS du style d'origine (pas de grands dégradés flashy) */
+.feature-card{
+    background:var(--brand);
+    border-radius:14px;
+    color:white;
+    padding:1rem;
+    cursor:pointer;
+    font-weight:600;
+    transition:transform .3s ease, box-shadow .3s ease;
+    box-shadow:0 6px 20px rgba(20,40,80,0.12);
+    text-align:center;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 30px rgba(30,70,120,0.12);
+}
+
+/* Version disabled, style cohérent */
+.feature-card-disabled{
+    background:rgba(74,143,231,0.35);
+    color:white;
+    border-radius:14px;
+    font-weight:600;
+    cursor:not-allowed;
+    opacity:.8;
+    text-align:center;
+}
+
+/* Cadre uniforme (on retire les effets néon/glass trop "futuristes") */
+.menu-frame-outer{
+    padding:1.2rem;
+    border-radius:18px;
+    background:rgba(255,255,255,0.45);
+    backdrop-filter:blur(6px);
+    box-shadow:0 8px 22px rgba(10,29,66,0.10);
+}
+
+.menu-frame{
+    background:rgba(255,255,255,0.04);
+    border-radius:14px;
+    padding:1rem;
+    backdrop-filter:blur(4px);
+}
+
+/* Bouton retour — homogène et simple */
+.back-btn {
+    padding:0.55rem 1.25rem;
+    font-size:1rem;
+    border-radius:12px;
+    background:var(--glass);
+    color:#1a2b4c;
+    border:none;
+    box-shadow:0 4px 12px rgba(10,29,66,0.08);
+    transition:all .25s ease;
+}
+
+.back-btn:hover{
+    transform:translateY(-3px);
+    background:var(--brand);
+    color:white;
+}
+/* === Floating background elements === */
+.float-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.float-item {
+    position: absolute;
+    opacity: 0.12;
+    filter: blur(1px);
+    transform-origin: center;
     transition: transform 0.3s ease;
 }
 
-.hero p:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-/* --- Cadre harmonisé au thème bleu -- */
-.menu-frame-outer{
-    border-radius:18px;
-    padding:4px; 
-    background: linear-gradient(
-        135deg,
-        rgba(74,143,231,0.45) 0%,
-        rgba(74,143,231,0.25) 50%,
-        rgba(10,29,66,0.20) 100%
-    );
-    background-size: 200% 200%;
-    -webkit-mask: linear-gradient(#000 0 0);
-    box-shadow: 0 12px 40px rgba(10,29,66,0.10);
-    transition: transform .25s ease, box-shadow .25s ease;
-    will-change: transform, background-position;
-    overflow: hidden;
-    display: block;
-    animation: softShift 14s ease infinite;
+/* === Navbar style harmonisé avec le hero === */
+.navbar {
+    background: linear-gradient(180deg, rgba(74,143,231,0.08), rgba(10,29,66,0.02));
+    box-shadow: 0 6px 20px rgba(10,29,66,0.08);
+    border-bottom: none; /* supprimer bordure pour cohérence */
+    padding: 1rem 2rem;
 }
 
-/* Animation très légère et élégante */
-@keyframes softShift {
-    0%   { background-position: 0% 0%; }
-    50%  { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
-
-
-/* fond intérieur (plus sombre / glass) qui contient réellement les boutons */
-.menu-frame{
-    border-radius:14px;
-    padding:18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(10,29,66,0.02));
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 6px 18px rgba(10,29,66,0.04);
-}
-
-/* légère interaction : agrandir le cadre au survol sans toucher aux boutons */
-.menu-frame-outer:hover{
-    transform: translateY(-4px);
-    box-shadow: 0 18px 60px rgba(10,29,66,0.12);
-}
-
-/* animation du dégradé du liseré */
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* ajustements : garder l'espacement card-grid cohérent à l'intérieur du cadre */
-.menu-frame .card-grid {
-    margin-top: 0; /* le padding du cadre gère l'espacement */
-    gap: 1rem;
-}
-
-/* si tu veux un liseré plus fin sur mobile */
-@media (max-width: 576px){
-    .menu-frame-outer{ padding:3px; border-radius:12px; }
-    .menu-frame{ padding:12px; border-radius:10px; }
-}
-.back-btn {
-    display: inline-block;
-    padding: 0.55rem 1.25rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-
-    /* COULEURS cohérentes avec le thème */
-    background: linear-gradient(135deg, rgba(74,143,231,0.15), rgba(24,209,209,0.15));
+.navbar-brand {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     color: #1a2b4c;
-
-    /* GLASS effect */
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-
-    /* Ombres identiques au style global */
-    box-shadow: 0 4px 12px rgba(10,29,66,0.08);
-
-    transition: all .25s ease;
 }
 
-/* HOVER : surbrillance comme les feature-cards */
-.back-btn:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(135deg, #4a8fe7, #18d1d1);
+.navbar-brand .logo-mark {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #4a8fe7, #2f6fd6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    box-shadow: 0 12px 28px rgba(10,29,66,0.15);
+    font-weight: 700;
+    font-size: 24px;
+    box-shadow: 0 6px 20px rgba(20,40,80,0.12);
 }
 
-/* Pressé */
-.back-btn:active {
-    transform: translateY(0px) scale(0.97);
-    box-shadow: 0 4px 12px rgba(10,29,66,0.07);
+/* Texte à côté du logo */
+.navbar-brand div {
+    line-height: 1.1;
+}
+
+.navbar-brand div small {
+    font-weight: 400;
+    color: #6c757d;
+}
+
+/* Ajustement responsive */
+@media (max-width: 768px){
+    .navbar-brand div {
+        display: none;
+    }
 }
 </style>
 </head>
 <body>
-<div class="hero">
-    <h1>Plan du site cours-reseaux.fr</h1>
-    <p>Cliquez sur un bouton pour naviguer dans le plan du site</p>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+  <div class="container d-flex align-items-center justify-content-between">
+    <!-- Logo + texte regroupés dans le lien -->
+    <a class="navbar-brand d-flex align-items-center gap-3" href="/">
+      <span class="logo-mark position-relative">
+        PS
+        <div id="tux-popup"></div>
+      </span>
+      <div class="d-none d-md-block">
+        <div style="font-weight:700">Plan du site cours-reseaux.fr</div>
+        <small class="text-muted">Cliquez sur un bouton pour naviguer dans le plan du site</small>
+      </div>
+    </a>
+  </div>
+</nav>
 <div class="container mt-3">
     <button class="back-btn" id="backBtn" style="display:none;">← Retour</button>
 
     <!-- cadre externe avec liseré animé -->
     <div class="menu-frame-outer mt-3">
         <!-- fond interne doux -->
-        <div class="menu-frame">
+        <div class="menu-frame glass-panel">
             <div id="menuContainer" class="card-grid">
             </div>
         </div>
