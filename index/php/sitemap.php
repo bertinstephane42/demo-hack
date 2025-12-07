@@ -103,7 +103,7 @@ $siteMenu = [
             "Dessiner" => [
                 "items" => [
                     ["url" => "https://cours-reseaux.fr/excalidrawjs", "label" => "ExcalidrawJS"],
-                    ["url" => "bts1:cours:excalidraw", "label" => "Info excalidrawJS"]
+                    ["url" => "https://cours-reseaux.fr/bts_sio/doku.php/bts1:cours:excalidraw", "label" => "Info excalidrawJS"]
                 ]
             ],
             "Documentation" => [
