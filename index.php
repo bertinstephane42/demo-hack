@@ -111,7 +111,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 
           <div class="mt-4 d-flex gap-3">
             <a class="btn btn-cta btn-lg" href="/bts_sio/doku.php/start" id="visitBtn">Accéder au DokuWiki</a>
-            <a class="btn btn-outline-secondary btn-lg" href="/index/php/sitemap.php" target="_blank" id="pdfBtn">Plan du site</a>
+            <a class="btn btn-outline-secondary btn-lg" href="/index/php/sitemap.php" id="pdfBtn">Plan du site</a>
           </div>
 
           <p class="mt-3 small text-muted">Site protégé par CloudFlare. Les applications pédagogiques sont servies via un proxy PHP pour isoler les environnements de TP.</p>
