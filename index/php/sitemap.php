@@ -391,7 +391,6 @@ body{
     <a class="navbar-brand d-flex align-items-center gap-3" href="/">
       <span class="logo-mark position-relative">
         PS
-        <div id="tux-popup"></div>
       </span>
       <div class="d-none d-md-block">
         <div style="font-weight:700">Plan du site cours-reseaux.fr</div>
@@ -422,14 +421,23 @@ function renderMenu(level, key=null){
     container.innerHTML = '';
     const backBtn = document.getElementById('backBtn');
 
+    // --- Nouveau comportement : bouton toujours visible ---
     if(level === 'categories'){
-        backBtn.style.display = 'none';
+        backBtn.style.display = 'inline-block';
+        backBtn.textContent = 'Plan du site';
+        backBtn.disabled = true; // pas cliquable
+    } else {
+        backBtn.style.display = 'inline-block';
+        backBtn.textContent = '← Retour';
+        backBtn.disabled = false; // cliquable
+    }
+
+    if(level === 'categories'){
         for(const cat in siteMenu){
             const div = document.createElement('div');
             const subcats = siteMenu[cat]['subcategories'] || {};
             const items = siteMenu[cat]['items'] || [];
 
-            // cliquable si au moins un sous-élément ou item avec URL
             const hasClickableSub = Object.keys(subcats).some(sub => (subcats[sub]['items'] && subcats[sub]['items'].length > 0));
             const hasClickableItem = items.some(item => item.url && item.url.trim() !== '');
             const isClickable = hasClickableSub || hasClickableItem;
@@ -506,6 +514,8 @@ document.getElementById('menuContainer').addEventListener('click', e=>{
 
 // Bouton retour
 document.getElementById('backBtn').addEventListener('click', ()=>{
+    if(document.getElementById('backBtn').disabled) return; // ignore si "Accueil"
+
     historyStack.pop(); // retire l'état actuel
     const last = historyStack.pop(); // reprend l'état précédent
     if(!last){
