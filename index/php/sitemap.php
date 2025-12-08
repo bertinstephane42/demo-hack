@@ -229,6 +229,9 @@ $siteMenu = [
 body{
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     background: linear-gradient(180deg, #eef4fa 0%, #f7faff 100%);
+	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* HERO identique au site d'origine */
@@ -324,11 +327,11 @@ body{
 }
 /* === Floating background elements === */
 .float-bg {
-    position: absolute;
+    position: fixed; 
     inset: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 0;
+    z-index: -1; 
 }
 
 .float-item {
@@ -382,9 +385,12 @@ body{
         display: none;
     }
 }
+footer {
+    margin-top: auto;
+}
 </style>
 </head>
-<body>
+<body class="d-flex flex-column">
 <div class="float-bg" aria-hidden="true">
     <!-- decorative floating SVG shapes animated by JS -->
     <svg class="float-item" id="float1" width="260" height="260" viewBox="0 0 260 260" style="left:-60px; top:-40px;">
@@ -398,7 +404,7 @@ body{
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container d-flex align-items-center justify-content-between">
     <!-- Logo + texte regroupés dans le lien -->
-    <a class="navbar-brand d-flex align-items-center gap-3" href="https://cours-reseaux.fr/index.php">
+    <a class="navbar-brand d-flex align-items-center gap-3">
       <span class="logo-mark position-relative">
         PS
       </span>
@@ -421,6 +427,18 @@ body{
         </div>
     </div>
 </div>
+
+ <footer class="bg-light py-4 border-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <strong>Cours-Réseaux</strong><br>
+        <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
+      </div>
+      <div class="text-end">
+        <small class="text-muted">Hébergement sécurisé • CloudFlare • Proxy PHP</small>
+      </div>
+    </div>
+  </footer>
 
 <script>
   document.addEventListener("contextmenu", event => event.preventDefault());

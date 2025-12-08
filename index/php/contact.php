@@ -97,6 +97,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/index.css">
+  <style>
+  body{
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: linear-gradient(180deg, #eef4fa 0%, #f7faff 100%);
+	min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+  footer {
+    margin-top: auto;
+}
+</style>
 </head>
 
 <body>
@@ -165,8 +177,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
  </header>
 
-  <footer class="text-center mt-4 mb-4">
-    <small>© <?= date("Y") ?> Cours-Réseaux.fr – Tous droits réservés</small>
+  <footer class="bg-light py-4 border-top">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div>
+        <strong>Cours-Réseaux</strong><br>
+        <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
+      </div>
+      <div class="text-end">
+        <small class="text-muted">Hébergement sécurisé • CloudFlare • Proxy PHP</small>
+      </div>
+    </div>
   </footer>
 </div>
 
