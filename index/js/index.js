@@ -1117,3 +1117,20 @@
 		// Démarrage de la boucle
 		loop();
 	}
+	
+	  const progressContainer = document.querySelector('.progress');
+	  const progressBar = progressContainer.querySelector('.progress-bar');
+
+	  progressContainer.addEventListener('mousemove', (e) => {
+		const rect = progressContainer.getBoundingClientRect();
+		let mouseX = e.clientX - rect.left; // position de la souris relative à la barre
+		let widthPercent = (mouseX / rect.width) * 100; // convertir en %
+		if(widthPercent < 0) widthPercent = 0;
+		if(widthPercent > 100) widthPercent = 100;
+		progressBar.style.width = widthPercent + '%';
+	  });
+
+	  // Optionnel : réinitialiser à 0% quand la souris quitte la barre
+	  progressContainer.addEventListener('mouseleave', () => {
+		progressBar.style.width = '72%';
+	  });
