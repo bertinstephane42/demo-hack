@@ -40,9 +40,9 @@
 	  let showCursor = true;
 	  let cursorInterval;
 
-	  // Calculer la hauteur totale nécessaire
 	  const lineHeight = parseInt(getComputedStyle(consoleEl).lineHeight) || 20;
 	  consoleEl.style.minHeight = `${lines.length * lineHeight}px`;
+	  consoleEl.style.color = "#0f0"; // couleur initiale
 
 	  function startConsoleAnimation() {
 		let i = 0;
@@ -58,7 +58,6 @@
 		}, 500);
 
 		function updateConsoleDisplay() {
-		  // on prend toutes les lignes complètes + la portion de la ligne en cours
 		  let displayLines = lines.slice(0, i).join('\n');
 		  if(i < lines.length) displayLines += (displayLines ? '\n' : '') + lines[i].slice(0, charIndex);
 		  consoleEl.textContent = displayLines + (showCursor ? '█' : ' ');
@@ -71,9 +70,9 @@
 		  if(charIndex > line.length) {
 			charIndex = 0;
 			i++;
-			setTimeout(tick, 700); // pause après chaque ligne
+			setTimeout(tick, 700);
 		  } else {
-			setTimeout(tick, 40); // vitesse d'écriture
+			setTimeout(tick, 40);
 		  }
 		  updateConsoleDisplay();
 		}
@@ -81,10 +80,22 @@
 		tick();
 	  }
 
+	  // --- Nouvelle partie : changement de couleur au passage de la souris ---
+	  consoleEl.addEventListener('mouseenter', () => {
+		consoleEl.style.color = "#a0ff70"; // couleur différente mais pas opposée
+	  });
+
+	  consoleEl.addEventListener('mouseleave', () => {
+		setTimeout(() => {
+		  consoleEl.style.color = "#0f0"; // retour à la couleur initiale
+		}, 1000); // délai 1 seconde
+	  });
+
 	  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 		startConsoleAnimation();
-		setInterval(startConsoleAnimation, 30000); // relance toutes les 30 secondes
+		setInterval(startConsoleAnimation, 30000);
 	  }
+
 	})();
 
     // Hover micro-animations for tech chips to add small confetti-like burst
