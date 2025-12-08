@@ -398,7 +398,7 @@ body{
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container d-flex align-items-center justify-content-between">
     <!-- Logo + texte regroupés dans le lien -->
-    <a class="navbar-brand d-flex align-items-center gap-3" href="/">
+    <a class="navbar-brand d-flex align-items-center gap-3" href="https://cours-reseaux.fr/index.php">
       <span class="logo-mark position-relative">
         PS
       </span>
@@ -444,12 +444,14 @@ function renderMenu(level, key=null){
     // --- Nouveau comportement : bouton toujours visible ---
     if(level === 'categories'){
         backBtn.style.display = 'inline-block';
-        backBtn.textContent = 'Plan du site';
-        backBtn.disabled = true; // pas cliquable
+        backBtn.textContent = 'Retour à l\'accueil';
+		backBtn.disabled = false;
+		backBtn.dataset.home = 'true';
     } else {
         backBtn.style.display = 'inline-block';
         backBtn.textContent = '← Retour';
         backBtn.disabled = false; // cliquable
+		backBtn.dataset.home = 'false';
     }
 
     if(level === 'categories'){
@@ -534,7 +536,14 @@ document.getElementById('menuContainer').addEventListener('click', e=>{
 
 // Bouton retour
 document.getElementById('backBtn').addEventListener('click', ()=>{
-    if(document.getElementById('backBtn').disabled) return; // ignore si "Accueil"
+    const backBtn = document.getElementById('backBtn');
+    if(backBtn.dataset.home === 'true'){
+        // demande de confirmation
+        if(confirm("Voulez-vous vraiment retourner à l'accueil ?")){
+            window.location.href = 'https://cours-reseaux.fr/index.php';
+        }
+        return;
+    }
 
     historyStack.pop(); // retire l'état actuel
     const last = historyStack.pop(); // reprend l'état précédent
