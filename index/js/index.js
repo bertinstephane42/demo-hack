@@ -171,21 +171,55 @@
 
 		let dx = (Math.random() * 0.5 + 0.1) * (Math.random() < 0.5 ? 1 : -1);
 		let dy = (Math.random() * 0.3 + 0.05) * (Math.random() < 0.5 ? 1 : -1);
+		
+		let mouseX = containerWidth / 2;
+		let mouseY = containerHeight / 2;
+		let originalDx = dx;
+		let originalDy = dy;
+		let restoreTimer = null;
+
+		// Suivi de la souris
+		container.addEventListener('mousemove', e => {
+			mouseX = e.clientX - container.getBoundingClientRect().left;
+			mouseY = e.clientY - container.getBoundingClientRect().top;
+		});
 
 		function animate() {
-		  let x = parseFloat(span.style.left);
-		  let y = parseFloat(span.style.top);
+			let x = parseFloat(span.style.left);
+			let y = parseFloat(span.style.top);
 
-		  x += dx;
-		  y += dy;
+			// Calcul distance souris
+			const dxMouse = x + span.offsetWidth/2 - mouseX;
+			const dyMouse = y + span.offsetHeight/2 - mouseY;
+			const dist = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
 
-		  if (x < 0 || x + span.offsetWidth > containerWidth) dx *= -1;
-		  if (y < 0 || y + span.offsetHeight > containerHeight) dy *= -1;
+			const repelRadius = 100;
 
-		  span.style.left = `${x}px`;
-		  span.style.top = `${y}px`;
+			if (dist < repelRadius) {
+				const force = (repelRadius - dist) / repelRadius * 0.5;
+				dx += (dxMouse / dist) * force;
+				dy += (dyMouse / dist) * force;
 
-		  requestAnimationFrame(animate);
+				// Annule le timer précédent si souris toujours proche
+				if (restoreTimer) clearTimeout(restoreTimer);
+
+				// Restaure la vitesse initiale après 1 seconde
+				restoreTimer = setTimeout(() => {
+					dx = originalDx;
+					dy = originalDy;
+				}, 1000);
+			}
+
+			x += dx;
+			y += dy;
+
+			if (x < 0 || x + span.offsetWidth > containerWidth) dx *= -1;
+			if (y < 0 || y + span.offsetHeight > containerHeight) dy *= -1;
+
+			span.style.left = `${x}px`;
+			span.style.top = `${y}px`;
+
+			requestAnimationFrame(animate);
 		}
 
 		animate();
@@ -226,7 +260,7 @@
 		// Création dynamique de l'élément audio (invisible dans le code source)
 		const audio = document.createElement('audio');
 		audio.id = 'hack';
-		audio.src = '/index/easteregg/hacking-music.mp3';
+		audio.src = '/index/sound/hacking-music.mp3';
 		audio.preload = 'auto';
 		document.body.appendChild(audio);
 
@@ -272,7 +306,6 @@
 	(function(){
 	  const el = document.getElementById('search');
 	  
-	  // Optionnel : vibration supplémentaire aléatoire simulant ambiance underground
 	  setInterval(() => {
 		const dy = (Math.random() - 0.5) * 2; // -1 à 1 px
 		el.style.transform = `translateY(${dy}px)`;
@@ -282,12 +315,25 @@
 	(function() {
 		const footer = document.querySelector('footer');
 		const canvas = document.getElementById('fireworks-canvas');
+		const hint = document.getElementById('fireworks-hint');
+		hint.textContent = "Cliquez pour activer le son des explosions";
+		let hintTimer;
 		const ctx = canvas.getContext('2d');
 		let width = canvas.width = window.innerWidth;
 		let height = canvas.height = window.innerHeight;
 		let fireworks = [];
 		let particles = [];
 		let running = false;
+		let soundEnabled = false;
+		
+		const boomSound = new Audio("https://cours-reseaux.fr/index/sound/fireboom.mp3");
+		boomSound.volume = 0.4; // volume raisonnable
+
+		function playFireworkSound() {
+			if (!soundEnabled) return;  // si OFF → pas de son
+			const s = boomSound.cloneNode();
+			s.play();
+		}
 
 		// Gestion resize
 		window.addEventListener('resize', () => {
@@ -320,6 +366,7 @@
 				}
 			}
 			explode() {
+				playFireworkSound();
 				const count = 20 + Math.random()*20;
 				for(let i=0; i<count; i++){
 					particles.push(new Particle(this.x, this.y, this.color));
@@ -375,6 +422,10 @@
 		footer.addEventListener('mouseenter', () => {
 			running = true;
 			animate();
+			clearTimeout(hintTimer);
+			hintTimer = setTimeout(() => {
+				hint.style.opacity = "1";
+			}, 2000);
 			// Lancer un feu d'artifice toutes les 0.5s
 			fireInterval = setInterval(() => {
 				fireworks.push(new Firework(Math.random()*width*0.8 + width*0.1, height*0.3 + Math.random()*100));
@@ -383,10 +434,21 @@
 
 		footer.addEventListener('mouseleave', () => {
 			running = false;
+			clearTimeout(hintTimer);
+			hint.style.opacity = "0";
 			clearInterval(fireInterval);
 			fireworks = [];   // vider les feux en cours
 			particles = [];   // vider les particules
 			ctx.clearRect(0, 0, width, height); // effacer le canvas
+		});
+		
+		footer.addEventListener('click', () => {
+			soundEnabled = !soundEnabled; // inverse ON/OFF
+
+			// Feedback visuel (optionnel)
+			hint.textContent = soundEnabled 
+				? "Son des explosions activé"
+				: "Son des explosions coupé";
 		});
 	})();
 
@@ -442,7 +504,7 @@
 						targetContainer.removeChild(span);
 						i++;
 						randomCharEffect();
-					}, 10 + Math.random() * 20); // variation du timing
+					}, 2 + Math.random() * 5); // variation du timing
 				} else {
 					const span = document.createElement('span');
 					span.textContent = charToShow;
@@ -486,7 +548,11 @@
 		mitnickTitle.textContent = content.title;
 		mitnickStoryContainer.innerHTML = '';
 		index = 0;
-		story = content.story;
+		story = content.story;	
+		
+		const lineHeight = parseInt(getComputedStyle(mitnickStoryContainer).lineHeight); // hauteur d'une ligne en px
+		const lines = story.split('\n').length; // nombre de lignes dans le texte
+		mitnickStoryContainer.style.minHeight = `${lineHeight * lines}px`;
 
 		mitnickModal.style.display = 'block';
 		typeStoryMatrix(mitnickStoryContainer, story);
@@ -530,7 +596,7 @@
 	const hackerAudio = document.getElementById("hackerAudio");
 	const backButton = document.getElementById("backButton");
 	let hoverTimer;
-	hackerAudio.src = "https://cours-reseaux.fr/index/iframe/hacker-demo.mp3";
+	hackerAudio.src = "https://cours-reseaux.fr/index/sound/hacker-demo.mp3";
 	let audioStarted = false;
 
 	badge.addEventListener("mouseenter", () => {
