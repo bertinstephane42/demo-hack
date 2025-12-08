@@ -134,6 +134,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+  document.addEventListener("contextmenu", event => event.preventDefault());
+  document.addEventListener("keydown", function (e) {
+	  if (
+		e.key === "F12" ||
+		(e.ctrlKey && e.shiftKey && e.key === "I") ||
+		(e.ctrlKey && e.key === "U")
+	  ) {
+		e.preventDefault();
+	  }
+  });
+</script>
 </body>
 </html>
