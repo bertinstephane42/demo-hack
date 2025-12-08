@@ -5,13 +5,35 @@
 $success = false;
 $errorMsg = "";
 
+// --- Validation du mail renforcée ---
+function isValidEmail(string $email): bool {
+    // 1) Validation standard (syntaxe correcte)
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+
+    // 2) Regex plus stricte (évite des cas borderline : '..', débuts/fin incorrects, etc.)
+    $pattern = "/^(?!.*\.\.)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i";
+    if (!preg_match($pattern, $email)) {
+        return false;
+    }
+
+    // 3) Vérification DNS MX : le domaine existe et peut recevoir des mails
+    $domain = substr(strrchr($email, "@"), 1);
+    if (!checkdnsrr($domain, "MX")) {
+        return false;
+    }
+
+    return true;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $name = trim($_POST["name"] ?? "");
     $email = trim($_POST["email"] ?? "");
     $message = trim($_POST["message"] ?? "");
 
-    if ($name !== "" && $email !== "" && $message !== "") {
+	if ($name !== "" && isValidEmail($email) && $message !== "") {
 
         // Sujet
         $subject = "Nouveau message depuis Cours-Reseaux.fr";
@@ -39,7 +61,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
     } else {
-        $errorMsg = "Merci de remplir tous les champs.";
+            if ($name === "") {
+				$errorMsg = "Merci de renseigner votre nom.";
+			}
+			elseif ($email === "") {
+				$errorMsg = "Merci de renseigner votre adresse email.";
+			}
+			elseif (!isValidEmail($email)) {
+				$errorMsg = "L’adresse email saisie n’est pas valide. Vérifiez le format et le domaine.";
+			}
+			elseif ($message === "") {
+				$errorMsg = "Merci d’écrire un message.";
+			}
+			else {
+				// Cas improbable (sécurité)
+				$errorMsg = "Les informations fournies ne sont pas valides.";
+			}
     }
 }
 ?>
