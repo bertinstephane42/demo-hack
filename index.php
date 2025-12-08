@@ -53,7 +53,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container d-flex align-items-center justify-content-between">
     <!-- Logo + texte regroupés dans le lien -->
-    <a class="navbar-brand d-flex align-items-center gap-3" href="/">
+    <a class="navbar-brand d-flex align-items-center gap-3">
       <span class="logo-mark position-relative">
         CR
         <div id="tux-popup"></div>
@@ -67,7 +67,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
     <!-- Boutons -->
     <div class="d-flex gap-2">
       <a class="btn btn-outline-primary" href="/bts_sio/doku.php/start">Accéder au DokuWiki</a>
-	  <a class="btn btn-outline-secondary" href="/contact.php">Contact</a>
+	  <a class="btn btn-outline-secondary" href="/index/php/contact.php">Contact</a>
 	  <button id="helpBtn" class="btn btn-outline-primary px-3 py-2 shadow-sm"
         style="border-width:2px; font-weight:600; letter-spacing:0.5px;">
 	  <span style="font-family:monospace;">Aide</span>
@@ -209,7 +209,9 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
             <div class="d-flex flex-wrap gap-2 mt-2">
               <span class="badge bg-light border">Systèmes</span>
               <span class="badge bg-light border">Scripting</span>
-              <span class="badge bg-light border">Sécurité</span>
+              <span id="cipherStrike" class="badge bg-light border" style="cursor:pointer;">
+					CyberDemo
+				</span>
               <span class="badge bg-light border">ITIL</span>
               <span class="badge bg-light border">DevOps</span>
               <span class="badge bg-light border">Gestion de projet</span>
@@ -248,6 +250,20 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 			<span class="hacker-close" id="closeHelp">&times;</span>
 			<h3 class="hacker-title"></h3>
 			<div class="hacker-text"></div>
+		</div>
+	</div>
+	
+	<!-- Fenêtre modale -->
+	<div id="hackerModal" class="hacker-modal hidden">
+		<div class="hacker-demo-content">
+			<div id="hackerContainer">
+				<pre id="screen"></pre>
+				<div id="musicText" style="position:absolute; left:50%; width:auto; height:20px; color:#0f0; font-family:monospace; overflow:hidden; transform:translateX(-50%);"></div>
+				<div id="scroller"><div id="scrollDiv"></div></div>
+				<pre id="skull" style="position:absolute; top:50%; right:20%; font-size:12px; line-height:12px;"></pre>
+			</div>
+			<button id="backButton">RETOUR</button>
+			<audio id="hackerAudio"></audio>
 		</div>
 	</div>
 
