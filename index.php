@@ -229,7 +229,9 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
         <div class="card mt-3 p-3">
           <h6>Statut</h6>
           <p class="small text-muted">Proxy applicatif en place — sessions isolées pour travaux pratiques. CloudFlare filtre les attaques et sert le contenu statique.</p>
-          <div class="progress" style="height:10px"><div class="progress-bar" role="progressbar" style="width:72%"></div></div>
+          <div class="progress" style="height:10px; cursor:pointer;">
+			<div class="progress-bar" role="progressbar" style="width:72%"></div>
+		  </div>
         </div>
       </aside>
     </div>
