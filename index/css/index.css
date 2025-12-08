@@ -404,3 +404,128 @@
 		white-space: pre-wrap; /* pour garder les retours à la ligne */
 		font-size: 1em;
 	}
+	
+	/* --- MODALE --- */
+	.hacker-modal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.9);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.5s ease;
+		z-index: 2000;
+	}
+
+	/* Classe active : fade-in en mode rideau d'opéra */
+	.hacker-modal.show {
+		opacity: 1;
+		pointer-events: auto;
+		animation: fadeInCurtain 1.5s forwards;
+	}
+
+	@keyframes fadeInCurtain {
+		0% { opacity: 0; transform: scaleY(0); }
+		100% { opacity: 1; transform: scaleY(1); }
+		transform-origin: top;
+	}
+
+	.hacker-demo-content {
+		width: 100vw;
+		height: 100vh;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* --- CONTAINER ASCII --- */
+	#hackerContainer {
+		width: 100%;
+		height: 100%;
+		background: #000;
+		color: #0f0;
+		font-family: "Courier New", monospace;
+		white-space: pre;
+		margin: 0;
+		overflow: hidden;
+		position: relative;
+		font-size: 14px;
+		line-height: 14px;
+	}
+	
+	#screen {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		white-space: pre;
+		margin: 0;
+		position: relative; 
+		left: 100px;         
+	}
+
+	#backButton {
+		position: absolute;
+		bottom: 20px;
+		left: 20px;
+		padding: 8px 12px;
+		background: #0f0;
+		color: #000;
+		font-family: "Courier New", monospace;
+		font-weight: bold;
+		border: 2px solid #0f0;
+		border-radius: 5px;
+		cursor: pointer;
+		z-index: 10;  /* toujours au-dessus de l'ASCII */
+		transition: all 0.2s;
+	}
+
+	#backButton:hover {
+		background: #000;
+		color: #0f0;
+	}
+	
+	#scroller {
+		position: absolute;       /* positionnement absolu dans hackerContainer */
+		bottom: 60px;             /* légèrement au-dessus du bouton RETOUR */
+		left: 50%;                /* centré horizontalement */
+		transform: translateX(-50%); /* ajustement pour le centrer parfaitement */
+		white-space: nowrap;      /* texte sur une seule ligne */
+		font-family: "Courier New", monospace;
+		font-size: 14px;
+		color: #0f0;
+		text-align: center;
+		z-index: 20;              /* au-dessus du bouton */
+		pointer-events: none;     /* laisse passer les clics sur le bouton */
+		overflow: hidden;
+	}
+	
+	#scrollDiv {
+			display: inline-block; /* pour le scrolling */
+			white-space: nowrap;
+		}
+	
+	#musicText {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		width: auto;
+		white-space: nowrap;
+		font-family: "Courier New", monospace;
+		font-size: 14px;
+		color: #0f0;
+		text-align: center;
+		z-index: 15;
+		pointer-events: none;
+		overflow: hidden;
+		height: 20px;
+		line-height: 20px;
+		bottom: 150px;  /* au-dessus du scroller */
+	}
+	
+	#skull {
+		overflow: hidden;     /* supprime tout ascenseur */
+	}
