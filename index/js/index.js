@@ -82,14 +82,20 @@
 
 	  // --- Nouvelle partie : changement de couleur au passage de la souris ---
 	  consoleEl.addEventListener('mouseenter', () => {
-		consoleEl.style.color = "#a0ff70"; // couleur différente mais pas opposée
-	  });
+		  consoleEl.style.color = "#0f0"; // couleur tranchée
+		  consoleEl.style.textShadow = `
+			0 0 5px #0f0,
+			0 0 10px #0f0,
+			0 0 20px #0f0,
+			0 0 30px #0f0
+		  `; // effet néon
+		});
 
-	  consoleEl.addEventListener('mouseleave', () => {
-		setTimeout(() => {
-		  consoleEl.style.color = "#0f0"; // retour à la couleur initiale
-		}, 1000); // délai 1 seconde
-	  });
+		consoleEl.addEventListener('mouseleave', () => {
+		  setTimeout(() => {
+			consoleEl.style.textShadow = "none"; // suppression effet néon
+		  }, 2000);
+		});
 
 	  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 		startConsoleAnimation();
