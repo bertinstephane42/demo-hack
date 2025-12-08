@@ -278,6 +278,13 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
       </div>
     </div>
 	<canvas id="fireworks-canvas" style="position:fixed;bottom:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+	<div id="fireworks-hint"
+     style="position:fixed; bottom:40px; left:50%; transform:translateX(-50%);
+            color:white; font-size:18px; font-weight:600; 
+            text-shadow:0 0 8px black; opacity:0; transition:opacity .4s;
+            pointer-events:none; z-index:10000;">
+    Cliquez pour activer le son des explosions
+</div>
   </footer>
 
   <!-- Scripts -->
