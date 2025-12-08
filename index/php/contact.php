@@ -182,6 +182,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		e.preventDefault();
 	  }
   });
+  document.addEventListener("DOMContentLoaded", () => {
+    const alertBox = document.querySelector(".alert-danger");
+    if (alertBox) {
+        setTimeout(() => {
+            alertBox.style.transition = "opacity 0.6s ease";
+            alertBox.style.opacity = "0";
+            setTimeout(() => alertBox.remove(), 600);
+        }, 5000); 
+    }
+});
 </script>
 </body>
 </html>
