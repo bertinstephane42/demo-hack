@@ -421,7 +421,7 @@
 				return;
 			}
 
-			let randomIterations = 5 + Math.floor(Math.random() * 5); // plus de chaos
+			let randomIterations = 2 + Math.floor(Math.random() * 2); // plus de chaos
 			let i = 0;
 
 			function randomCharEffect() {
@@ -442,7 +442,7 @@
 						targetContainer.removeChild(span);
 						i++;
 						randomCharEffect();
-					}, 30 + Math.random() * 50); // variation du timing
+					}, 10 + Math.random() * 20); // variation du timing
 				} else {
 					const span = document.createElement('span');
 					span.textContent = charToShow;
@@ -454,7 +454,7 @@
 
 					index++;
 					targetContainer.scrollTop = targetContainer.scrollHeight;
-					setTimeout(() => typeStoryMatrix(targetContainer, text), 5);
+					setTimeout(() => typeStoryMatrix(targetContainer, text), 1);
 				}
 			}
 
@@ -533,13 +533,12 @@
 	hackerAudio.src = "https://cours-reseaux.fr/index/iframe/hacker-demo.mp3";
 	let audioStarted = false;
 
-	// -------- SURVOL 3 SECONDES → OUVERTURE DE LA MODALE --------
 	badge.addEventListener("mouseenter", () => {
 		hoverTimer = setTimeout(() => {
 			modal.classList.add("show");
 			// Lancer la démo ASCII
 			startHackerDemo();
-		}, 3000);
+		}, 2000);
 	});
 
 	badge.addEventListener("mouseleave", () => clearTimeout(hoverTimer));
