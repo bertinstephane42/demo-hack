@@ -40,9 +40,9 @@ Le visiteur est invité à découvrir <strong>5 easter eggs cachés</strong>
 <br>
 - Une apparition furtive d'un symbole emblématique du logiciel libre<br>
 - Un contrôle audio caché, activable via un bouton flottant<br>
-- Une phrase étrange avec un comportement inattendu<br>
 - L’histoire réelle d’un célèbre hacker, à découvrir dans la page<br>
 - Un effet visuel festif attribué au mois de juillet<br>
+- Une démo ASCII façon “hacker”, hommage direct à l’ère Amiga<br>
 <br>
 Le <strong>développement Web</strong> offre des possibilités illimitées : 
 avec un peu d’imagination, on peut créer de véritables œuvres numériques.
