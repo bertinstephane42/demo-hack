@@ -596,17 +596,6 @@
 	helpCloseBtn.addEventListener('click', () => {
 		helpModal.classList.remove('show');
 	});
-
-	// Fermer si clic hors modale
-	window.addEventListener('click', (e) => {
-		if (e.target === mitnickModal) {
-			mitnickModal.style.display = 'none';
-			clearTimeout(typingInterval);
-		}
-		if (e.target === helpModal) {
-			helpModal.classList.remove('show');
-		}
-	});
 	
 	const badge = document.getElementById("cipherStrike");
 	const modal = document.getElementById("hackerModal");
