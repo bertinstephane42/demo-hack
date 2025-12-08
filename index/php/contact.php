@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	</div>
 	</nav>
 
+<header class="hero">
 <div class="container">
   <div class="contact-wrapper">
     <?php if ($success): ?>
@@ -125,6 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </form>
 
   </div>
+ </header>
 
   <footer class="text-center mt-4 mb-4">
     <small>© <?= date("Y") ?> Cours-Réseaux.fr – Tous droits réservés</small>

@@ -30,32 +30,33 @@ Aujourd'hui, les connaissances en hacking peuvent être mises au service de la s
 "
     ],
     'help' => [
-        'title' => 'Bienvenue dans la Démo Hacker',
+        'title' => 'Bienvenue sur le site cours-reseaux.fr',
         'story' => "
-Cette page est une démonstration inspirée des <strong>démos hacker d’antan</strong>, 
-où créativité, curiosité et sens du détail formaient la base de la culture informatique.<br>
-<br>
-Le visiteur est invité à découvrir <strong>5 easter eggs cachés</strong> 
-(effets spéciaux, animations secrètes et interactions inattendues). Voici ce que vous pouvez retrouver :<br>
-<br>
+Cette page est une démonstration inspirée des <strong>démos hacker d’antan</strong>,
+où créativité, curiosité et sens du détail formaient la base de la culture informatique.<br><br>
+
+Vous êtes invité à découvrir <strong>5 easter eggs</strong> :<br>
+
 - Une apparition furtive d'un symbole emblématique du logiciel libre<br>
 - Un contrôle audio caché, activable via un bouton flottant<br>
 - L’histoire réelle d’un célèbre hacker, à découvrir dans la page<br>
 - Un effet visuel festif attribué au mois de juillet<br>
-- Une démo ASCII façon “hacker”, hommage direct à l’ère Amiga<br>
-<br>
-Le <strong>développement Web</strong> offre des possibilités illimitées : 
-avec un peu d’imagination, on peut créer de véritables œuvres numériques.
-Le coding n’est pas seulement une technique : <strong>c’est un art</strong>.<br>
-<br>
-Même en entreprise, même en tant qu’administrateur systèmes & réseaux, 
-créer ses propres outils reste un atout. Les métiers évoluent, les compétences 
-s’hybrident, notamment grâce à l’essor de l’IA.<br>
-<br>
-Les étudiants du <strong>CFAI</strong> s’immergent dans ce nouveau monde 
-technologique pour devenir des <strong>hackers éthiques</strong>, compétents, créatifs 
-et capables d’innover.<br>
-<br><strong>La jeunesse nous donne de l’espoir.</strong>
+- Une démo ASCII façon “hacker”, hommage direct à l’ère Amiga<br><br>
+
+Le <strong>développement Web</strong> offre des possibilités illimitées :
+avec un peu d’imagination, vous pouvez créer de véritables œuvres numériques.
+Le coding n’est pas seulement une technique : <strong>c’est un art</strong>.<br><br>
+
+Même en entreprise, même en tant qu’administrateur systèmes & réseaux,
+<strong>créer vos propres outils</strong> reste un atout — à condition, bien sûr, d’obtenir
+l’accord de votre supérieur. Les métiers évoluent, les compétences
+s’hybrident, notamment grâce à l’essor de l’IA.<br><br>
+
+Vous, étudiants du <strong>CFAI</strong>, immergez-vous dans ce nouveau monde
+technologique pour devenir des <strong>hackers éthiques</strong>, compétents, créatifs
+et capables d’innover.<br><br>
+
+Et c’est <strong>votre génération</strong> qui nous <strong>donne de l’espoir.</strong>
 "
     ]
 ];
