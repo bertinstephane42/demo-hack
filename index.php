@@ -154,7 +154,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
           <!-- small preview area for animated console / editor -->
           <div class="mt-4 p-3">
             <div id="miniIDE" class="border rounded" style="background:#0b1220;color:#dbeafe;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;min-height:160px">
-              <div style="opacity:.85;font-size:.85rem">$ tail -f /var/log/lessons.log</div>
+              <div style="opacity:.85;font-size:.85rem"></div>
               <pre id="console" style="margin:0;white-space:pre-wrap"></pre>
             </div>
           </div>
