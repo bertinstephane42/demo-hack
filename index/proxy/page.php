@@ -6,6 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit("Method not allowed");
 }
 
+header('X-Content-Type-Options: nosniff');
+header('Content-Type: text/html; charset=utf-8');
+
 // Vérification de l'ID
 $id = $_POST['id'] ?? null;
 
@@ -26,9 +29,18 @@ if (!$id || !isset($routes[$id])) {
     exit("Path not found");
 }
 
+if (!is_file($routes[$id]) || !is_readable($routes[$id])) {
+    http_response_code(500);
+    exit("Internal routing error");
+}
+
+function safe_include($file) {
+    include $file;
+}
+
 // Capture tout l'affichage de la page
 ob_start();
-include $routes[$id];
+safe_include($routes[$id]);
 $content = ob_get_clean();
 
 // Sinon, affiche le contenu normal
