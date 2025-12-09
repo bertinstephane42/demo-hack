@@ -1,6 +1,6 @@
 <?php
 // Bloquer l'accès direct si ce n'est pas une requête Fetch/AJAX
-if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || ($_SERVER['HTTP_X_REQUESTED_WITH']) != 'XMLHttpRequest') {
     http_response_code(403);
     echo json_encode(['error' => 'Denied access']);
     exit;
