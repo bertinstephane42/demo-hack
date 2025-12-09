@@ -109,7 +109,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
           </div>
 
           <div class="mt-4 d-flex gap-3">
-            <a class="btn btn-cta btn-lg" href="/bts_sio/doku.php/start" id="visitBtn">Accéder au DokuWiki</a>
+            <a class="btn btn-cta btn-lg" id="visitBtn">Accéder au DokuWiki</a>
 			<a class="btn btn-outline-secondary btn-lg" id="btnPlan">Plan du site</a>
           </div>
 
