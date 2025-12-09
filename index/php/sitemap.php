@@ -140,7 +140,7 @@ $siteMenu = [
                     ["url" => "https://cours-reseaux.fr/goodies/web-02.html", "label" => "Modem Web v0.2"]
                 ]
             ],
-            "Intelligence Artificielle - LLM" => [
+            "IA - LLM" => [
                 "items" => [
                     ["url" => "https://cours-reseaux.fr/bts_sio/proxy_user.php?tp=bts1/ia/danger_ia.html", "label" => "Utilisez l'IA de manière responsable"],
                     ["url" => "https://cours-reseaux.fr/bts_sio/proxy_user.php?tp=bts1/ia/intro_ia.html", "label" => "Fonctionnement d'un LLM"],
@@ -181,7 +181,7 @@ $siteMenu = [
 
     "Aide à l'utilisation du wiki" => [
         "subcategories" => [
-            "Ancienne plateforme" => [
+            "Ancien site" => [
                 "items" => [
                     ["url" => "https://cours-reseaux.fr/bts_sio/doku.php/doc:site_bts1", "label" => "Identifiants du site privé"]
                 ]
