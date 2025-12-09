@@ -529,3 +529,20 @@
 	#skull {
 		overflow: hidden;     /* supprime tout ascenseur */
 	}
+	
+	.hacker-fade {
+	  opacity: 0;
+	  color: var(--muted);
+	  transition: opacity 0.75s ease-in-out;
+	  pointer-events: auto; /* laisse l'élément recevoir le hover/clic même s'il est invisible */
+	}
+
+	/* au survol : apparition progressive jusqu'à 0.40 */
+	.hacker-fade:hover {
+	  opacity: 0.30;
+	}
+
+	/* respect préférences réduction mouvement */
+	@media (prefers-reduced-motion: reduce) {
+	  .hacker-fade { transition: none; }
+	}
