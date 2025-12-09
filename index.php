@@ -72,7 +72,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
         style="border-width:2px; font-weight:600; letter-spacing:0.5px;">
 	  <span style="font-family:monospace;">Aide</span>
 	</button>
-	  <button class="btn btn-outline-light btn-sm subtle-btn" id="hackerBtn" title="H4ck3r My7h1qu3">
+	  <button class="btn btn-outline-light btn-sm subtle-btn hacker-fade" id="hackerBtn">
 		0xH4X0
 	  </button>
     </div>
