@@ -144,6 +144,10 @@
       }catch(e){}
     })();
 	
+	document.getElementById('visitBtn').addEventListener('click', () => {
+	  window.location.href = '/bts_sio/doku.php/start';
+	});
+	
 	(function(){
 	  const words = [
 		"RGPD", "ITIL", "DevOps", "Systèmes", "Cybersécurité", "GNU/Linux", "Windows",
