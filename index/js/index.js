@@ -265,14 +265,6 @@
 			document.querySelector('.logo-mark').classList.toggle('show-tux');
 		});
 	
-	document.addEventListener("DOMContentLoaded", () => {
-		const logo = document.querySelector('.logo-mark');
-		logo.addEventListener('click', () => {
-			logo.classList.toggle('show-tux');
-			console.log("Classe .show-tux ajoutée ? →", logo.classList.contains('show-tux'));
-		});
-	});
-	
 	(function(){
 		// Création dynamique de l'élément audio (invisible dans le code source)
 		const audio = document.createElement('audio');
@@ -1107,19 +1099,27 @@
 		loop();
 	}
 	
-	  const progressContainer = document.querySelector('.progress');
-	  const progressBar = progressContainer.querySelector('.progress-bar');
+	const progressContainer = document.querySelector('.progress');
+	const progressBar = progressContainer.querySelector('.progress-bar');
 
-	  progressContainer.addEventListener('mousemove', (e) => {
+	progressContainer.addEventListener('mousemove', (e) => {
 		const rect = progressContainer.getBoundingClientRect();
 		let mouseX = e.clientX - rect.left; // position de la souris relative à la barre
 		let widthPercent = (mouseX / rect.width) * 100; // convertir en %
 		if(widthPercent < 0) widthPercent = 0;
 		if(widthPercent > 100) widthPercent = 100;
 		progressBar.style.width = widthPercent + '%';
-	  });
+	});
 
-	  // Optionnel : réinitialiser à 0% quand la souris quitte la barre
-	  progressContainer.addEventListener('mouseleave', () => {
+	// Optionnel : réinitialiser à 0% quand la souris quitte la barre
+	progressContainer.addEventListener('mouseleave', () => {
 		progressBar.style.width = '72%';
-	  });
+	 });
+	  
+	document.addEventListener("DOMContentLoaded", () => {
+		const logo = document.querySelector('.logo-mark');
+		logo.addEventListener('click', () => {
+			logo.classList.toggle('show-tux');
+			console.log("Classe .show-tux ajoutée ? →", logo.classList.contains('show-tux'));
+		});
+	});
