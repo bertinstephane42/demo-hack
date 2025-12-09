@@ -412,6 +412,11 @@ footer {
         <div style="font-weight:700">Plan du site cours-reseaux.fr</div>
         <small class="text-muted">Cliquez sur un bouton pour naviguer dans le plan du site</small>
       </div>
+	  <div class="text-center mb-4">
+		<a href="https://cours-reseaux.fr/index.php" class="btn btn-outline-secondary">
+			Retour à l'accueil
+		</a>
+	</div>
     </a>
   </div>
 </nav>
@@ -462,8 +467,8 @@ function renderMenu(level, key=null){
     // --- Nouveau comportement : bouton toujours visible ---
     if(level === 'categories'){
         backBtn.style.display = 'inline-block';
-        backBtn.textContent = 'Retour à l\'accueil';
-		backBtn.disabled = false;
+        backBtn.textContent = 'Racine de DokuWiki';
+		backBtn.disabled = true;
 		backBtn.dataset.home = 'true';
     } else {
         backBtn.style.display = 'inline-block';
