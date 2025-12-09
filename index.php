@@ -19,7 +19,6 @@ header("Content-Security-Policy:
 
 // Petite logique: détecter environnement (dev/prod) via variable d'environnement
 $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
-
 ?><!doctype html>
 <html lang="fr">
 <head>
@@ -66,8 +65,8 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 
     <!-- Boutons -->
     <div class="d-flex gap-2">
-      <a class="btn btn-outline-primary" href="/bts_sio/doku.php/start">Accéder au DokuWiki</a>
-	  <a class="btn btn-outline-secondary" href="/index/php/contact.php">Contact</a>
+        <button class="btn btn-outline-primary" id="btnDoku">Accéder au DokuWiki</button>
+		<button class="btn btn-outline-secondary" id="btnContact">Contact</button>
 	  <button id="helpBtn" class="btn btn-outline-primary px-3 py-2 shadow-sm"
         style="border-width:2px; font-weight:600; letter-spacing:0.5px;">
 	  <span style="font-family:monospace;">Aide</span>
@@ -111,7 +110,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 
           <div class="mt-4 d-flex gap-3">
             <a class="btn btn-cta btn-lg" href="/bts_sio/doku.php/start" id="visitBtn">Accéder au DokuWiki</a>
-            <a class="btn btn-outline-secondary btn-lg" href="/index/php/sitemap.php" id="pdfBtn">Plan du site</a>
+			<a class="btn btn-outline-secondary btn-lg" id="btnPlan">Plan du site</a>
           </div>
 
           <p class="mt-3 small text-muted">Site protégé par CloudFlare. Les applications pédagogiques sont servies via un proxy PHP pour isoler les environnements de TP.</p>
@@ -272,7 +271,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
   <footer class="bg-light py-4 mt-5 border-top">
     <div class="container d-flex justify-content-between align-items-center">
       <div>
-        <a href="https://www.linkedin.com/in/st%C3%A9phane-bertin-9a085aa3/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/stephane-bertin-cfai/" target="_blank" rel="noopener noreferrer">
 			<strong>Stéphane BERTIN</strong>
 		</a><br>
         <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
