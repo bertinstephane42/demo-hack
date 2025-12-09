@@ -39,12 +39,15 @@
 
 	  let showCursor = true;
 	  let cursorInterval;
+	  let animationRunning = false;
 
 	  const lineHeight = parseInt(getComputedStyle(consoleEl).lineHeight) || 20;
 	  consoleEl.style.minHeight = `${lines.length * lineHeight}px`;
 	  consoleEl.style.color = "#0f0"; // couleur initiale
 
 	  function startConsoleAnimation() {
+		if (animationRunning) return;
+		animationRunning = true;
 		let i = 0;
 		let charIndex = 0;
 
@@ -64,7 +67,10 @@
 		}
 
 		function tick() {
-		  if(i >= lines.length) return;
+		  if (i >= lines.length) {
+				animationRunning = false;
+				return;
+			}
 		  const line = lines[i];
 		  charIndex++;
 		  if(charIndex > line.length) {
@@ -99,7 +105,7 @@
 
 	  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
 		startConsoleAnimation();
-		setInterval(startConsoleAnimation, 30000);
+		setInterval(startConsoleAnimation, 25000);
 	  }
 
 	})();
