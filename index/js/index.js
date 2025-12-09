@@ -542,7 +542,7 @@
 	// Fonction pour charger le contenu via AJAX
 	async function loadModalContent(modalKey) {
 		try {
-			const response = await fetch('/index/php/modales_content.php', {
+			const response = await fetch('/index/json/data.php', {
 				headers: {
 					'X-Requested-With': 'XMLHttpRequest'
 				}
@@ -1121,6 +1121,33 @@
 	progressContainer.addEventListener('mouseleave', () => {
 		progressBar.style.width = '72%';
 	 });
+	
+	document.getElementById('btnDoku').addEventListener('click', () => {
+	  window.location.href = '/bts_sio/doku.php/start';
+	});
+	
+	function secureRedirect(id) {
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = '/index/proxy/page.php';
+
+		const input = document.createElement('input');
+		input.type = 'hidden';
+		input.name = 'id';
+		input.value = id;
+
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
+	}
+
+	document.getElementById('btnContact').addEventListener('click', () => {
+		secureRedirect('contact');
+	});
+
+	document.getElementById('btnPlan').addEventListener('click', () => {
+		secureRedirect('sitemap');
+	});
 	  
 	document.addEventListener("DOMContentLoaded", () => {
 		const logo = document.querySelector('.logo-mark');
