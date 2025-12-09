@@ -135,6 +135,11 @@ $siteMenu = [
                     ["url" => "https://github.com/bertinstephane42/", "label" => "Github bertinstephane42"]
                 ]
             ],
+			"Goodies" => [
+                "items" => [
+                    ["url" => "https://cours-reseaux.fr/goodies/web-02.html", "label" => "Modem Web v0.2"]
+                ]
+            ],
             "Intelligence Artificielle - LLM" => [
                 "items" => [
                     ["url" => "https://cours-reseaux.fr/bts_sio/proxy_user.php?tp=bts1/ia/danger_ia.html", "label" => "Utilisez l'IA de manière responsable"],
@@ -436,7 +441,7 @@ footer {
  <footer class="bg-light py-4 border-top">
     <div class="container d-flex justify-content-between align-items-center">
       <div>
-        <a href="https://www.linkedin.com/in/st%C3%A9phane-bertin-9a085aa3/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/stephane-bertin-cfai/" target="_blank" rel="noopener noreferrer">
 			<strong>Stéphane BERTIN</strong>
 		</a><br>
         <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
