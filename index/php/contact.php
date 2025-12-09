@@ -27,7 +27,7 @@ function isValidEmail(string $email): bool {
     return true;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["form_submitted"]) && $_POST["form_submitted"] === "1" && isset($_POST["id"]) && $_POST["id"] === "contact") {
 
     $name = trim($_POST["name"] ?? "");
     $email = trim($_POST["email"] ?? "");
@@ -153,7 +153,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div class="alert alert-danger"><?= htmlspecialchars($errorMsg) ?></div>
     <?php endif; ?>
 
-    <form action="" method="POST">
+    <form action="/index/proxy/page.php" method="POST">
+		 <input type="hidden" name="id" value="contact">
+		 <input type="hidden" name="form_submitted" value="1">
       <div class="form-floating mb-3">
         <input type="text" name="name" class="form-control" id="nameInput" placeholder="Votre nom" required>
         <label for="nameInput">Votre nom et prénom</label>
@@ -180,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <footer class="bg-light py-4 border-top">
     <div class="container d-flex justify-content-between align-items-center">
       <div>
-        <a href="https://www.linkedin.com/in/st%C3%A9phane-bertin-9a085aa3/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/stephane-bertin-cfai/" target="_blank" rel="noopener noreferrer">
 			<strong>Stéphane BERTIN</strong>
 		</a><br>
         <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
