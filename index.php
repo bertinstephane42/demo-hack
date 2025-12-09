@@ -272,7 +272,9 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
   <footer class="bg-light py-4 mt-5 border-top">
     <div class="container d-flex justify-content-between align-items-center">
       <div>
-        <strong>Cours-Réseaux</strong><br>
+        <a href="https://www.linkedin.com/in/st%C3%A9phane-bertin-9a085aa3/" target="_blank" rel="noopener noreferrer">
+			<strong>Stéphane BERTIN</strong>
+		</a><br>
         <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
       </div>
       <div class="text-end">
