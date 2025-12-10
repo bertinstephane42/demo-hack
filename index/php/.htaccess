@@ -5,6 +5,3 @@ Require all denied
 <Files "page.php">
     Require all granted
 </Files>
-<Files "json.php">
-    Require all granted
-</Files>
