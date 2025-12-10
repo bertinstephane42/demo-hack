@@ -393,6 +393,126 @@ body{
 footer {
     margin-top: auto;
 }
+/* === Couleurs selon le type d'URL === */
+.item-proxy {
+    background: #62c7b8 !important;  /* vert menthe */
+}
+
+.item-doku {
+    background: #e0904a !important;  /* orange pastel légèrement assombri */
+}
+
+.item-site {
+    background: #9a84e3 !important;  /* violet pastel */
+}
+
+.item-external {
+    background: #6f7a8c !important;  /* gris ardoise bleuté */
+}
+
+/* Hover cohérent pour items */
+.item-proxy:hover    { background:#55b3a5 !important; }
+.item-doku:hover     { background:#cf7b36 !important; }
+.item-site:hover     { background:#826ed1 !important; }
+.item-external:hover { background:#5a6572 !important; }
+
+/* === Animation fade-in pour la légende === */
+@keyframes fadeInLegend {
+    0%   { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* === Légende centrée et harmonisée avec la charte === */
+#legendBox {
+    display: none;
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%) translateY(15px);
+    bottom: 12.5%;
+    width: 100%;
+    max-width: 560px;
+    margin: 2.5rem auto;
+    padding: 1.5rem 2rem;
+    background: rgba(74, 143, 231, 0.06);
+    border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(10, 29, 66, 0.10);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Classe appliquée pour déclencher l'animation */
+#legendBox.show {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+#legendBox h3 {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    margin: 0 0 1rem 0;
+    border: 1px solid var(--brand);
+    border-radius: 12px;
+    background: rgba(74, 143, 231, 0.08);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a2b4c;
+    text-align: center;
+    width: auto;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    background-image: linear-gradient(120deg, rgba(74,143,231,0.12), rgba(74,143,231,0.05));
+    transition: all 0.3s ease;
+}
+
+#legendBox h3:hover {
+    box-shadow: 0 4px 12px rgba(74,143,231,0.3);
+    transform: translateY(-2px);
+}
+
+/* Ligne de légende : bouton + description */
+.legend-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Transition douce pour tous les boutons de légende */
+.legend-btn {
+    padding: 0.4rem 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 12px rgba(10, 29, 66, 0.08);
+    transition: all 0.3s ease; /* ajouté pour animation fluide */
+}
+
+/* Effet hover identique à celui du titre, uniquement pour les boutons */
+#legendBox .legend-btn:hover {
+    box-shadow: 0 4px 12px rgba(74,143,231,0.3);
+    transform: translateY(-2px);
+}
+
+/* Boutons de légende avec largeur fixe pour aligner les textes */
+#legendBox .legend-btn {
+    padding: 0.4rem 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 12px rgba(10, 29, 66, 0.08);
+    transition: all 0.3s ease;
+    width: 120px; /* largeur fixe basée sur le bouton le plus large */
+    text-align: center;
+}
+
+.legend-proxy    { background:#62c7b8; }
+.legend-doku     { background:#e0904a; }
+.legend-site     { background:#9a84e3; }
+.legend-external { background:#6f7a8c; }
+.legend-category { background: #4a8fe7; }
 </style>
 </head>
 <body class="d-flex flex-column">
@@ -436,6 +556,34 @@ footer {
             </div>
         </div>
     </div>
+	<div id="legendBox">
+		<h3 style="text-align:center; margin-bottom:15px; font-size:1.25rem; font-weight:600;">
+			Légende des boutons
+		</h3>
+		<div class="legend-row">
+			<button class="legend-btn legend-category">Catégorie</button>
+			<span>Catégorie ou sous-catégorie du site</span>
+		</div>
+		<div class="legend-row">
+			<button class="legend-btn legend-proxy">Proxy</button>
+			<span>Application protégée par proxy PHP / DokuWiki</span>
+		</div>
+
+		<div class="legend-row">
+			<button class="legend-btn legend-doku">DokuWiki</button>
+			<span>Ressource hébergée dans DokuWiki</span>
+		</div>
+
+		<div class="legend-row">
+			<button class="legend-btn legend-site">Site</button>
+			<span>Application interne hébergée sur le site</span>
+		</div>
+
+		<div class="legend-row">
+			<button class="legend-btn legend-external">Externe</button>
+			<span>Ressource externe n'appartenant pas au site</span>
+		</div>
+	</div>
 </div>
 
  <footer class="bg-light py-4 border-top">
@@ -526,6 +674,7 @@ function renderMenu(level, key=null){
             div.dataset.type = 'item';
             div.dataset.url = item.url;
             div.textContent = item.label;
+			classifyButton(div, item.url);
             container.appendChild(div);
         });
     } else if(level === 'items'){
@@ -540,9 +689,19 @@ function renderMenu(level, key=null){
             div.dataset.type = 'item';
             if(isClickable) div.dataset.url = item.url;
             div.textContent = item.label;
+			classifyButton(div, item.url);
             container.appendChild(div);
         });
     }
+	
+	// --- Légende toujours visible avec animation (après ajout des boutons) ---
+    const legend = document.getElementById('legendBox');
+    legend.classList.remove('show');
+    legend.style.display = 'block';
+    void legend.offsetWidth; // forcer le reflow
+    setTimeout(() => {
+        legend.classList.add('show');
+    }, 200); // délai uniforme pour toutes les pages
 }
 
 // Gestion du clic sur les boutons
@@ -588,6 +747,23 @@ document.getElementById('backBtn').addEventListener('click', ()=>{
         historyStack.push(last);
     }
 });
+
+function classifyButton(div, url){
+    if(!url) return;
+
+    if(url.includes('/proxy_user.php?tp=')){
+        div.classList.add('item-proxy');
+    }
+    else if(url.includes('/doku.php/')){
+        div.classList.add('item-doku');
+    }
+    else if(url.includes('cours-reseaux.fr')){
+        div.classList.add('item-site');
+    }
+    else {
+        div.classList.add('item-external');
+    }
+}
 
 // initial
 renderMenu('categories');
