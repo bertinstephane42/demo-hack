@@ -43,15 +43,15 @@ où créativité, curiosité et sens du détail formaient la base de la culture 
 
 Vous êtes invité à découvrir <strong>5 easter eggs</strong> :<br>
 
-- L’apparition furtive d’un symbole iconique du logiciel libre<br>
-- Un son futuriste que vous pouvez activer via un bouton flottant visible<br>
-- La véritable histoire d’un hacker célèbre, accessible par un bouton caché<br>
-- Un effet visuel festif lié au mois de juillet<br>
-- Une démo ASCII façon “hacker”, accompagnée d’une reprise techno de Mozart, hommage direct à l’époque Amiga<br><br>
+- L’apparition furtive d’un symbole iconique du logiciel libre en survolant un objet<br>
+- Un son au design futuriste, déclenchable via un élément bien placé<br>
+- La véritable histoire d’un hacker célèbre, révélable par une interaction moins évidente<br>
+- Un effet visuel saisonnier, activé en survolant une zone particulière<br>
+- Une démo ASCII façon hacker en musique techno, activable via un élément visible.<br><br>
 
 Le <strong>développement Web</strong> offre des possibilités illimitées :
 avec un peu d’imagination, vous pouvez créer de véritables œuvres numériques.
-Le coding n’est pas seulement une technique : <strong>c’est un art</strong>.<br><br>
+Le coding n’est pas seulement une technique : <strong>c’est un art</strong>. La musique de la démo ASCII en est un clin d’œil, hommage à l’esprit du « Mozart de l’informatique ».<br><br>
 
 Même en entreprise, même en tant qu’administrateur systèmes & réseaux,
 <strong>créer vos propres outils</strong> reste un atout — à condition, bien sûr, d’obtenir
