@@ -111,6 +111,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
           <div class="mt-4 d-flex gap-3">
             <a class="btn btn-cta btn-lg" id="visitBtn">Accéder au DokuWiki</a>
 			<a class="btn btn-outline-secondary btn-lg" id="btnPlan">Plan du site</a>
+			<a class="btn btn-outline-secondary btn-lg" id="openSchemaBtn">Infrastructure</a>
           </div>
 
           <p class="mt-3 small text-muted">Site protégé par CloudFlare. Les applications pédagogiques sont servies via un proxy PHP pour isoler les environnements de TP.</p>
@@ -265,6 +266,18 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 			</div>
 			<button id="backButton">RETOUR</button>
 			<audio id="hackerAudio"></audio>
+		</div>
+	</div>
+	
+	<!-- === Modale Schéma Infra === -->
+	<div id="schemaModal" class="hacker-modal">
+		<div class="hacker-content">
+			<span id="closeSchemaModal" class="schema-close">&times;</span>
+			<div style="display:flex; justify-content:center; margin-top:0px;">
+				<img src="index/img/schema.svg" 
+					 alt="Schéma de l’infrastructure pédagogique"
+					 style="max-width:100%; height:auto; border-radius:6px;">
+			</div>
 		</div>
 	</div>
 
