@@ -6,6 +6,12 @@ if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || ($_SERVER['HTTP_X_REQUESTED_WITH
     exit;
 }
 
+if (empty($_SERVER['HTTP_X_PUBLIC_TOKEN']) || ($_SERVER['HTTP_X_PUBLIC_TOKEN']) != '82969263953921582058') {
+    http_response_code(403);
+    echo json_encode(['error' => 'Invalid token']);
+    exit;
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 $data = [
