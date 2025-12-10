@@ -571,7 +571,7 @@ footer {
 
 		<div class="legend-row">
 			<button class="legend-btn legend-doku">DokuWiki</button>
-			<span>Ressource hébergée dans DokuWiki</span>
+			<span>Ressource hébergée sur DokuWiki</span>
 		</div>
 
 		<div class="legend-row">
