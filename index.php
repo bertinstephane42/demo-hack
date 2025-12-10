@@ -96,7 +96,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
             </div>
             <div class="tech-chip" title="Web">
               <div class="tech-icon">Web</div>
-              <small>HTML / JS / PHP</small>
+              <small>HTML/JS/PHP</small>
             </div>
             <div class="tech-chip" title="GNU/Linux">
               <div class="tech-icon">Tux</div>
@@ -206,14 +206,14 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
           <section class="mt-4">
             <h5>Thématiques clés</h5>
             <div class="d-flex flex-wrap gap-2 mt-2">
-              <span class="badge bg-light border">Systèmes</span>
-              <span class="badge bg-light border">Scripting</span>
-              <span id="cipherStrike" class="badge bg-light border" style="cursor:pointer;">
-					CyberDemo
+              <span class="badge bg-light border" style="cursor:default;">Systèmes</span>
+              <span class="badge bg-light border" style="cursor:default;">Scripting</span>
+              <span id="cipherStrike" class="badge bg-light border" style="cursor:default;">
+					Hacking
 				</span>
-              <span class="badge bg-light border">ITIL</span>
-              <span class="badge bg-light border">DevOps</span>
-              <span class="badge bg-light border">Gestion de projet</span>
+              <span class="badge bg-light border" style="cursor:default;">ITIL</span>
+              <span class="badge bg-light border" style="cursor:default;">DevOps</span>
+              <span class="badge bg-light border" style="cursor:default;">Gestion de projet</span>
             </div>
           </section>
 		  <!-- Word Cloud défilant -->
