@@ -430,7 +430,7 @@ footer {
     transform: translateX(-50%) translateY(15px);
     bottom: 12.5%;
     width: 100%;
-    max-width: 560px;
+    max-width: 590px;
     margin: 2.5rem auto;
     padding: 1.5rem 2rem;
     background: rgba(74, 143, 231, 0.06);
@@ -566,7 +566,7 @@ footer {
 		</div>
 		<div class="legend-row">
 			<button class="legend-btn legend-proxy">Proxy</button>
-			<span>Application protégée par proxy PHP / DokuWiki</span>
+			<span>Ressource web protégée par proxy PHP / DokuWiki</span>
 		</div>
 
 		<div class="legend-row">
@@ -575,13 +575,13 @@ footer {
 		</div>
 
 		<div class="legend-row">
-			<button class="legend-btn legend-site">Site</button>
-			<span>Application interne hébergée sur le site</span>
+			<button class="legend-btn legend-site">Interne</button>
+			<span>Ressource web interne hébergée sur le site</span>
 		</div>
 
 		<div class="legend-row">
 			<button class="legend-btn legend-external">Externe</button>
-			<span>Ressource externe n'appartenant pas au site</span>
+			<span>Ressource web externe n'appartenant pas au site</span>
 		</div>
 	</div>
 </div>
