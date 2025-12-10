@@ -10,7 +10,7 @@
     /* animated tech chips */
     .tech-chip{display:inline-flex; gap:.5rem; align-items:center; padding:.45rem .65rem; border-radius:999px; background:var(--glass); border:1px solid rgba(255,255,255,0.04); transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s; cursor:default}
     .tech-chip:hover{transform:translateY(-6px) scale(1.03); box-shadow:0 10px 30px rgba(37,81,169,0.12)}
-    .tech-icon{width:28px;height:28px;display:inline-grid;place-items:center;font-weight:700;border-radius:6px;background:rgba(255,255,255,0.06)}
+    .tech-icon{width:32px;height:28px;display:inline-grid;place-items:center;font-weight:700;border-radius:6px;background:rgba(255,255,255,0.06)}
 
     /* floating background elements */
     .float-bg {position:absolute; inset:0; pointer-events:none; overflow:hidden}
@@ -88,6 +88,20 @@
 
 	.badge.bg-primary {
 	  background-color: #3b8cff !important;
+	}
+
+	.badge {
+		transition: 
+			filter 0.25s ease,
+			transform 0.25s ease,
+			box-shadow 0.25s ease;
+	}
+	
+	.badge:hover {
+		cursor: pointer;
+		filter: brightness(1.15);
+		transform: translateY(-2px) scale(1.05);
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 	}
 	
 	/* Tux */
