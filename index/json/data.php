@@ -43,11 +43,11 @@ où créativité, curiosité et sens du détail formaient la base de la culture 
 
 Vous êtes invité à découvrir <strong>5 easter eggs</strong> :<br>
 
-- Une apparition furtive d'un symbole emblématique du logiciel libre<br>
-- Un contrôle audio caché, activable via un bouton flottant<br>
-- L’histoire réelle d’un célèbre hacker, à découvrir dans la page<br>
-- Un effet visuel festif attribué au mois de juillet<br>
-- Une démo ASCII façon “hacker”, hommage direct à l’ère Amiga<br><br>
+- L’apparition furtive d’un symbole iconique du logiciel libre<br>
+- Un son futuriste que vous pouvez activer via un bouton flottant visible<br>
+- La véritable histoire d’un hacker célèbre, accessible par un bouton caché<br>
+- Un effet visuel festif lié au mois de juillet<br>
+- Une démo ASCII façon “hacker”, accompagnée d’une reprise techno de Mozart, hommage direct à l’époque Amiga<br><br>
 
 Le <strong>développement Web</strong> offre des possibilités illimitées :
 avec un peu d’imagination, vous pouvez créer de véritables œuvres numériques.
