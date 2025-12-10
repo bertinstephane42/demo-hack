@@ -275,35 +275,42 @@
 			document.querySelector('.logo-mark').classList.toggle('show-tux');
 		});
 	
-	(function(){
-		// Création dynamique de l'élément audio (invisible dans le code source)
+	(function () {
 		const audio = document.createElement('audio');
 		audio.id = 'hack';
-		audio.src = '/index/sound/hacking-music.mp3';
+		audio.src = '/index/sound/binary-code.mp3';
 		audio.preload = 'auto';
 		document.body.appendChild(audio);
 
-		const tuxChip = document.querySelector('.tech-chip[title="GNU/Linux"]');
-		
-		let audioUnlocked = false; // vrai déclencheur après interaction
-		let hoverTimeout; // stocke le timer de survol
+		const tuxChip = document.querySelector('.tech-chip[title="Web"]');
 
-		// Débloquer le son après un premier clic n'importe où
-		document.addEventListener('click', () => {
-			if (!audioUnlocked) {
-				audio.play().then(() => {
-					audio.pause();
-					audio.currentTime = 0;
-					audioUnlocked = true;
-				}).catch(() => {});
-			}
-		}, { once: true });
+		let audioUnlocked = false;
+		let alertShown = false;
+		let alertTimeout;
+		let hoverTimeout;
 
-		// Switch on/off au survol avec délai
+		// 1. Première interaction : survol pendant 1s → message d'alerte
 		tuxChip.addEventListener('mouseenter', () => {
+
+			if (!alertShown) {
+				// Délai avant l’apparition de l’alerte
+				alertTimeout = setTimeout(() => {
+					alertShown = true;
+
+					alert(
+						"Pour activer l'expérience sonore futuriste, cliquez n'importe où après ce message, puis survolez de nouveau ce bouton pour entendre le son."
+					);
+
+					// Débloquer le son au premier clic suivant l’alerte
+					document.addEventListener('click', unlockAudio, { once: true });
+
+				}, 2000);
+			}
+
+			// Si le son n'est pas encore débloqué → pas de lecture
 			if (!audioUnlocked) return;
 
-			// Lance le timer de 1 seconde
+			// Lecture/pause après 1 seconde de survol si débloqué
 			hoverTimeout = setTimeout(() => {
 				if (audio.paused) {
 					audio.currentTime = 0;
@@ -312,13 +319,29 @@
 					audio.pause();
 					audio.currentTime = 0;
 				}
-			}, 1000);
+			}, 2000);
+
 		});
 
-		// Annule si la souris quitte avant 1 seconde
+		// Annule l’attente de l’alerte si sortie trop tôt
 		tuxChip.addEventListener('mouseleave', () => {
+			clearTimeout(alertTimeout);
 			clearTimeout(hoverTimeout);
 		});
+
+		// Fonction de déblocage réel de l’audio
+		function unlockAudio() {
+			if (audioUnlocked) return;
+
+			audio.play().then(() => {
+				audio.pause();
+				audio.currentTime = 0;
+				audioUnlocked = true;
+				console.log("Audio débloqué avec succès.");
+			}).catch(err => {
+				console.warn("Impossible de débloquer l’audio :", err);
+			});
+		}
 
 	})();
 	
@@ -467,7 +490,7 @@
 			// Feedback visuel (optionnel)
 			hint.textContent = soundEnabled 
 				? "Son des explosions activé"
-				: "Son des explosions coupé";
+				: "Son des explosions désactivé";
 		});
 	})();
 
