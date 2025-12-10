@@ -27,6 +27,10 @@
 	  padding-bottom: 20px;
 	}
 
+	body.modal-open {
+		overflow: hidden;
+	}
+
     /* CTA */
     .btn-cta{background:linear-gradient(90deg,var(--brand),#2f6fd6); border:0; color:white}
 
@@ -310,6 +314,21 @@
 	  transition: transform 0.2s ease, color 0.3s ease;
 	}
 	.hacker-close:hover {
+	  color: #4a8fe7;
+	  transform: scale(1.2);
+	}
+	
+	/* Bouton fermeture */
+	.schema-close {
+	  position: absolute;
+	  top: 0px;
+	  right: 16px;
+	  cursor: pointer;
+	  font-size: 1.2rem;
+	  color: #a0c4ff;
+	  transition: transform 0.2s ease, color 0.3s ease;
+	}
+	.schema-close:hover {
 	  color: #4a8fe7;
 	  transform: scale(1.2);
 	}
