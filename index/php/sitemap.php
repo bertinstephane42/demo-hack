@@ -426,26 +426,54 @@ footer {
 #legendBox {
     display: none;
     position: absolute;
-    left: 50%; 
-    transform: translateX(-50%) translateY(15px);
-    bottom: 12.5%;
-    width: 100%;
-    max-width: 590px;
-    margin: 2.5rem auto;
+    left: 50%;
+    transform: translateX(-50%); /* centrer horizontalement */
+    
+    width: 90%;
+    max-width: 605px;
+    overflow-y: auto;
+    box-sizing: border-box;
     padding: 1.5rem 2rem;
+
     background: rgba(74, 143, 231, 0.06);
     border-radius: 16px;
     box-shadow: 0 8px 22px rgba(10, 29, 66, 0.10);
     text-align: center;
+
     opacity: 0;
     transition: opacity 0.6s ease, transform 0.6s ease;
+    margin: 0 auto;
 }
 
-/* Classe appliquée pour déclencher l'animation */
 #legendBox.show {
     display: block;
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%);
+}
+
+/* Responsive mobile */
+@media (max-width: 576px) {
+    #legendBox {
+        width: 95%;
+        padding: 0.75rem 1rem;
+    }
+
+    #legendBox h3 {
+        font-size: 1rem;
+        padding: 0.25rem 0.75rem;
+    }
+
+    #legendBox .legend-btn {
+        width: 90px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .legend-row {
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 #legendBox h3 {
@@ -765,8 +793,54 @@ function classifyButton(div, url){
     }
 }
 
+function updateLegendBoxPosition() {
+    const legendBox = document.getElementById('legendBox');
+    const menuContainer = document.getElementById('menuContainer');
+    const footer = document.querySelector('footer');
+
+    if (!legendBox || !menuContainer || !footer) return;
+
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    // Position absolue du bas du menuContainer
+    const menuRect = menuContainer.getBoundingClientRect();
+    const menuBottom = menuRect.bottom + scrollY;
+
+    // Position absolue du haut du footer
+    const footerRect = footer.getBoundingClientRect();
+    const footerTop = footerRect.top + scrollY;
+
+    // Marges fixes
+    const menuMargin = 80;   // espace sous le menuContainer
+    const footerMargin = 20; // espace au-dessus du footer
+
+    // Top position de legendBox
+    const top = menuBottom + menuMargin;
+
+    // Hauteur maximale possible pour rester entre menu et footer
+    const maxHeight = footerTop - top - footerMargin;
+
+    // Largeur responsive selon viewport et maxWidth CSS
+    const viewportWidth = window.innerWidth;
+    const maxWidth = 605; // max-width défini en CSS
+    let width = Math.min(viewportWidth * 0.9, maxWidth); // 90% du viewport ou maxWidth
+    width = Math.max(width, 200); // largeur minimale pour lisibilité
+
+    // Appliquer styles
+    legendBox.style.top = top + 'px';
+    legendBox.style.maxHeight = maxHeight + 'px';
+    legendBox.style.width = width + 'px';
+}
+
 // initial
 renderMenu('categories');
+
+// Appel initial
+updateLegendBoxPosition();
+
+// Mise à jour au redimensionnement et au scroll
+window.addEventListener('resize', updateLegendBoxPosition);
+window.addEventListener('scroll', updateLegendBoxPosition);
 </script>
 </body>
 </html>
