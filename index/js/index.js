@@ -491,56 +491,54 @@
 	// Fonction typing Matrix
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:',.<>/?";
 
-	function typeStoryMatrix(targetContainer, text) {
-		if (index < text.length) {
-			const charToShow = text[index];
+	function typeStoryMatrix(targetContainer, text, index = 0) {
+		if (index >= text.length) return;
 
-			if (charToShow === '\n') {
-				targetContainer.innerHTML += '<br>';
-				index++;
-				setTimeout(() => typeStoryMatrix(targetContainer, text), 15);
-				return;
-			}
+		const charToShow = text[index];
 
-			let randomIterations = 2 + Math.floor(Math.random() * 2); // plus de chaos
-			let i = 0;
-
-			function randomCharEffect() {
-				if (i < randomIterations) {
-					const span = document.createElement('span');
-					span.textContent = charset[Math.floor(Math.random() * charset.length)];
-
-					// Position et couleur aléatoire
-					span.style.position = 'relative';
-					span.style.left = `${Math.floor(Math.random() * 10 - 5)}px`;
-					span.style.top = `${Math.floor(Math.random() * 10 - 5)}px`;
-					span.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-					span.style.fontWeight = 'bold';
-
-					targetContainer.appendChild(span);
-
-					setTimeout(() => {
-						targetContainer.removeChild(span);
-						i++;
-						randomCharEffect();
-					}, 2 + Math.random() * 5); // variation du timing
-				} else {
-					const span = document.createElement('span');
-					span.textContent = charToShow;
-					span.style.position = 'relative';
-					span.style.left = '0px';
-					span.style.top = '0px';
-					span.style.color = '#0f0';
-					targetContainer.appendChild(span);
-
-					index++;
-					targetContainer.scrollTop = targetContainer.scrollHeight;
-					setTimeout(() => typeStoryMatrix(targetContainer, text), 1);
-				}
-			}
-
-			randomCharEffect();
+		// Gestion du retour à la ligne
+		if (charToShow === '\n') {
+			targetContainer.innerHTML += '<br>';
+			setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 15);
+			return;
 		}
+
+		let iterations = 2 + Math.floor(Math.random() * 2);
+		let i = 0;
+
+		function randomCharEffect() {
+			if (i < iterations) {
+				const span = document.createElement('span');
+				span.textContent = charset[Math.floor(Math.random() * charset.length)];
+				span.style.position = 'relative';
+				span.style.left = `${Math.floor(Math.random() * 10 - 5)}px`;
+				span.style.top = `${Math.floor(Math.random() * 10 - 5)}px`;
+				span.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+				span.style.fontWeight = 'bold';
+				targetContainer.appendChild(span);
+
+				setTimeout(() => {
+					span.remove();
+					i++;
+					randomCharEffect();
+				}, 10 + Math.random() * 20); // un timing un peu plus large pour éviter les glitches
+			} else {
+				const span = document.createElement('span');
+				span.textContent = charToShow;
+				span.style.position = 'relative';
+				span.style.left = '0px';
+				span.style.top = '0px';
+				span.style.color = '#0f0';
+				targetContainer.appendChild(span);
+
+				targetContainer.scrollTop = targetContainer.scrollHeight;
+
+				// Passage au caractère suivant
+				setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 20);
+			}
+		}
+
+		randomCharEffect();
 	}
 
 	// Fonction pour charger le contenu via AJAX
