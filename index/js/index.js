@@ -548,7 +548,8 @@
 		try {
 			const response = await fetch('/index/json/data.php', {
 				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-Public-Token': '82969263953921582058'
 				}
 			});
 			const data = await response.json();
