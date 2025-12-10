@@ -514,10 +514,15 @@
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:',.<>/?";
 
 	function typeStoryMatrix(targetContainer, text, index = 0) {
+		// Annuler tous les timers existants si la fonction est relancée
+		typingTimers.forEach(t => clearTimeout(t));
+		typingTimers = [];
+
 		if (index >= text.length) return;
 
 		const charToShow = text[index];
 
+		// Gestion du retour à la ligne
 		if (charToShow === '\n') {
 			targetContainer.innerHTML += '<br>';
 			const t = setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 15);
@@ -528,27 +533,32 @@
 		const tempSpan = document.createElement('span');
 		tempSpan.style.display = 'inline-block';
 		tempSpan.style.minWidth = '0.6em';
+		tempSpan.style.position = 'relative';
+		tempSpan.style.transition = 'all 0.05s linear';
 		targetContainer.appendChild(tempSpan);
 
-		const iterations = 2 + Math.floor(Math.random() * 2);
+		const iterations = 1 + Math.floor(Math.random() * 2);
 		let i = 0;
 
 		function randomCharEffect() {
 			if (i < iterations) {
 				tempSpan.textContent = charset[Math.floor(Math.random() * charset.length)];
+				tempSpan.style.color = `hsl(${Math.random() * 120}, 100%, 50%)`; // glitch flashy
+				tempSpan.style.top = `${Math.random() * 6 - 3}px`;
+				tempSpan.style.left = `${Math.random() * 4 - 2}px`;
 				i++;
-				const t = setTimeout(randomCharEffect, 10 + Math.random() * 20);
+				const t = setTimeout(randomCharEffect, 10 + Math.random() * 20); // suivi dans typingTimers
 				typingTimers.push(t);
 			} else {
+				// Texte final correct
 				tempSpan.textContent = charToShow;
 				tempSpan.style.color = '#0f0';
-				tempSpan.style.position = 'relative';
-				tempSpan.style.left = '0px';
 				tempSpan.style.top = '0px';
+				tempSpan.style.left = '0px';
 
 				targetContainer.scrollTop = targetContainer.scrollHeight;
 
-				const t = setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 20);
+				const t = setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 10);
 				typingTimers.push(t);
 			}
 		}
