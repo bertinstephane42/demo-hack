@@ -507,9 +507,8 @@
 	const helpTitle = helpModal.querySelector('.hacker-title');
 	const helpTextContainer = helpModal.querySelector('.hacker-text');
 
-	let story = '';
-	let index = 0;
 	let typingInterval;
+	let typingTimers = [];
 
 	// Fonction typing Matrix
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:',.<>/?";
@@ -519,45 +518,38 @@
 
 		const charToShow = text[index];
 
-		// Gestion du retour à la ligne
 		if (charToShow === '\n') {
 			targetContainer.innerHTML += '<br>';
-			setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 15);
+			const t = setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 15);
+			typingTimers.push(t);
 			return;
 		}
 
-		let iterations = 2 + Math.floor(Math.random() * 2);
+		const tempSpan = document.createElement('span');
+		tempSpan.style.display = 'inline-block';
+		tempSpan.style.minWidth = '0.6em';
+		targetContainer.appendChild(tempSpan);
+
+		const iterations = 2 + Math.floor(Math.random() * 2);
 		let i = 0;
 
 		function randomCharEffect() {
 			if (i < iterations) {
-				const span = document.createElement('span');
-				span.textContent = charset[Math.floor(Math.random() * charset.length)];
-				span.style.position = 'relative';
-				span.style.left = `${Math.floor(Math.random() * 10 - 5)}px`;
-				span.style.top = `${Math.floor(Math.random() * 10 - 5)}px`;
-				span.style.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-				span.style.fontWeight = 'bold';
-				targetContainer.appendChild(span);
-
-				setTimeout(() => {
-					span.remove();
-					i++;
-					randomCharEffect();
-				}, 10 + Math.random() * 20); // un timing un peu plus large pour éviter les glitches
+				tempSpan.textContent = charset[Math.floor(Math.random() * charset.length)];
+				i++;
+				const t = setTimeout(randomCharEffect, 10 + Math.random() * 20);
+				typingTimers.push(t);
 			} else {
-				const span = document.createElement('span');
-				span.textContent = charToShow;
-				span.style.position = 'relative';
-				span.style.left = '0px';
-				span.style.top = '0px';
-				span.style.color = '#0f0';
-				targetContainer.appendChild(span);
+				tempSpan.textContent = charToShow;
+				tempSpan.style.color = '#0f0';
+				tempSpan.style.position = 'relative';
+				tempSpan.style.left = '0px';
+				tempSpan.style.top = '0px';
 
 				targetContainer.scrollTop = targetContainer.scrollHeight;
 
-				// Passage au caractère suivant
-				setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 20);
+				const t = setTimeout(() => typeStoryMatrix(targetContainer, text, index + 1), 20);
+				typingTimers.push(t);
 			}
 		}
 
@@ -588,21 +580,25 @@
 
 		mitnickTitle.textContent = content.title;
 		mitnickStoryContainer.innerHTML = '';
-		index = 0;
-		story = content.story;	
-		
-		const lineHeight = parseInt(getComputedStyle(mitnickStoryContainer).lineHeight); // hauteur d'une ligne en px
-		const lines = story.split('\n').length; // nombre de lignes dans le texte
+
+		const lineHeight = parseInt(getComputedStyle(mitnickStoryContainer).lineHeight);
+		const lines = content.story.split('\n').length;
 		mitnickStoryContainer.style.minHeight = `${lineHeight * lines}px`;
 
 		mitnickModal.style.display = 'block';
-		typeStoryMatrix(mitnickStoryContainer, story);
+		document.body.classList.add('modal-open');
+
+		// Appel avec index local 0
+		typeStoryMatrix(mitnickStoryContainer, content.story, 0);
 	});
 
 	// Fermer Mitnick
 	mitnickCloseBtn.addEventListener('click', () => {
 		mitnickModal.style.display = 'none';
-		clearTimeout(typingInterval);
+		document.body.classList.remove('modal-open');
+		//clearTimeout(typingInterval);
+		typingTimers.forEach(t => clearTimeout(t));
+		typingTimers = [];
 	});
 
 	// Ouvrir Aide
@@ -614,11 +610,13 @@
 		helpTextContainer.innerHTML = content.story;
 
 		helpModal.classList.add('show'); // <-- affiche au centre avec flex
+		document.body.classList.add('modal-open');
 	});
 
 	// Fermer Aide
 	helpCloseBtn.addEventListener('click', () => {
 		helpModal.classList.remove('show');
+		document.body.classList.remove('modal-open');
 	});
 	
 	const badge = document.getElementById("cipherStrike");
@@ -1180,5 +1178,20 @@
 		logo.addEventListener('click', () => {
 			logo.classList.toggle('show-tux');
 			console.log("Classe .show-tux ajoutée ? →", logo.classList.contains('show-tux'));
+		});
+		const openBtn = document.getElementById("openSchemaBtn");
+		const modal = document.getElementById("schemaModal");
+		const closeBtn = document.getElementById("closeSchemaModal");
+
+		// Ouverture
+		openBtn.addEventListener("click", () => {
+			modal.classList.add("show");
+			document.body.classList.add('modal-open');
+		});
+
+		// Fermeture via le X
+		closeBtn.addEventListener("click", () => {
+			modal.classList.remove("show");
+			document.body.classList.remove('modal-open');
 		});
 	});
