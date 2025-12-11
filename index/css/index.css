@@ -521,6 +521,27 @@
 		color: #0f0;
 	}
 	
+	#pauseBtn {
+		position: absolute;
+		bottom: 20px;
+		left: 120px; /* ajustable selon la largeur de #backButton + marge */
+		padding: 8px 12px;
+		background: #0f0;
+		color: #000;
+		font-family: "Courier New", monospace;
+		font-weight: bold;
+		border: 2px solid #0f0;
+		border-radius: 5px;
+		cursor: pointer;
+		z-index: 10;  /* toujours au-dessus de l'ASCII */
+		transition: all 0.2s;
+	}
+
+	#pauseBtn:hover {
+		background: #000;
+		color: #0f0;
+	}
+	
 	#scroller {
 		position: absolute;       /* positionnement absolu dans hackerContainer */
 		bottom: 60px;             /* légèrement au-dessus du bouton RETOUR */
