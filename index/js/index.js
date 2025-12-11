@@ -635,11 +635,39 @@
 	const backButton = document.getElementById("backButton");
 	let hoverTimer;
 	hackerAudio.src = "https://cours-reseaux.fr/index/sound/hacker-demo.mp3";
+	let paused = false;
 	let audioStarted = false;
+	let audioElement = null;
+	
+	// === AUDIO ANALYSIS — initialisation UNIQUE ===
+	if (!window.hackerAudioNodes) {
+	  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+	  // createMediaElementSource ne doit être appelé qu'une seule fois pour cet élément audio
+	  const sourceNode = audioContext.createMediaElementSource(hackerAudio);
+	  const analyser = audioContext.createAnalyser();
+	  analyser.fftSize = 256;
+
+	  sourceNode.connect(analyser);
+	  analyser.connect(audioContext.destination);
+
+	  const audioData = new Uint8Array(analyser.frequencyBinCount);
+
+	  // Stocke les objets pour réutilisation (évite la recréation multiple)
+	  window.hackerAudioNodes = { audioContext, sourceNode, analyser, audioData };
+	}
+
+	function getAudioLevel() {
+	  const { analyser, audioData } = window.hackerAudioNodes;
+	  analyser.getByteFrequencyData(audioData);
+	  let sum = 0;
+	  for (let i = 0; i < audioData.length; i++) sum += audioData[i];
+	  return sum / audioData.length; // 0 → 255
+	}
 
 	badge.addEventListener("mouseenter", () => {
 		hoverTimer = setTimeout(() => {
 			modal.classList.add("show");
+			document.body.classList.add('modal-open');
 			// Lancer la démo ASCII
 			startHackerDemo();
 		}, 2000);
@@ -648,17 +676,58 @@
 	badge.addEventListener("mouseleave", () => clearTimeout(hoverTimer));
 
 	// -------- FERMETURE --------
-	modal.addEventListener("click", (e) => {
-		if (!audioStarted && e.target !== backButton) {
-			hackerAudio.play().catch(e => console.warn("Audio bloqué :", e));
+	modal.addEventListener("click", async (e) => {
+		if (audioStarted || e.target === backButton) return;
+
+		// Permet l'analyse correcte si la ressource est hébergée sur un autre domaine
+		try {
+			hackerAudio.crossOrigin = "anonymous";
+		} catch (err) {
+			// non critique
+		}
+
+		const nodes = window.hackerAudioNodes;
+		const ac = nodes && nodes.audioContext;
+
+		// Resume l'AudioContext de façon asynchrone si nécessaire
+		if (ac && ac.state === "suspended") {
+			try {
+				await ac.resume();
+			} catch (err) {
+				console.warn("Impossible de reprendre audioContext :", err);
+			}
+		}
+		
+		// Sécurise l'état avant la lecture
+		if (ac && ac.state !== "running") {
+			try { await ac.resume(); } catch(e){}
+		}
+
+		// Lance la lecture et n'active audioStarted qu'après succès
+		try {
+			await hackerAudio.play();
+			hackerAudio.volume = hackerAudio.volume; // force initialisation interne
+			window.hackerAudioNodes.analyser.getByteFrequencyData(window.hackerAudioNodes.audioData);
+			// donne un petit délai pour que l'analyser collecte des échantillons
+			if (nodes && nodes.analyser) {
+				// vidage initial des données
+				nodes.analyser.getByteFrequencyData(nodes.audioData);
+				// attente courte pour que les frames audio commencent à arriver
+				await new Promise(res => setTimeout(res, 100));
+			}
 			audioStarted = true;
+		} catch (err) {
+			console.warn("Lecture audio empêchée :", err);
+			// ne bascule pas audioStarted = true si la lecture a échoué
 		}
 	});
 
 	backButton.addEventListener("click", () => {
 		modal.classList.remove("show");   // cache la modale
+		document.body.classList.remove('modal-open');
 		hackerAudio.pause();              // stoppe la musique
 		hackerAudio.currentTime = 0;      // reset audio
+		audioStarted = false;
 	});
 
 	// ========================================================
@@ -674,6 +743,24 @@
 	  // TRIG
 	  const SIN = [];
 	  for(let i=0;i<3600;i++) SIN[i] = Math.sin(i*0.01);
+	  
+	  if (!audioElement) {
+			audioElement = document.getElementById("hackerAudio");
+		}
+		const pauseBtn = document.getElementById("pauseBtn");
+		if (!pauseBtn.dataset.listenerAttached) {
+			pauseBtn.addEventListener("click", () => {
+				paused = !paused; // inverse l'état
+				if(audioElement){
+					if(paused){
+						audioElement.pause();
+					} else {
+						audioElement.play();
+					}
+				}
+			});
+			pauseBtn.dataset.listenerAttached = "true"; // marque l'écouteur comme attaché
+		}
 
 	  const PALETTE = " .,:;+*#%@";
 	  const stars = Array.from({length:120}, ()=>({x:Math.random()*width, y:Math.random()*height, z:Math.random()*4+1}));
@@ -970,64 +1057,72 @@
 
 	  let skullFrameIndex = 0;
 
-	  function generatePlasma(){
+	  function generatePlasma(level = 128){
 		let output="";
 		for(let y=0;y<height;y++){
-		  let line="";
-		  for(let x=0;x<width;x++){
-			let v = SIN[(x*10+frame)%3600]+
-					SIN[(y*10+frame*2)%3600]+
-					SIN[(x*5+y*4+frame*3)%3600]+
-					SIN[(Math.floor(Math.hypot(x-60,y-17)*8)+frame*4)%3600];
-			v = (v+4)/8;
-			let idx = Math.floor(v*(PALETTE.length-1));
-			line += PALETTE[idx];
-		  }
-		  output += line + "\n";
+			let line="";
+			for(let x=0;x<width;x++){
+				let v = SIN[(x*10+frame)%3600]+
+						SIN[(y*10+frame*2)%3600]+
+						SIN[(x*5+y*4+frame*3)%3600]+
+						SIN[(Math.floor(Math.hypot(x-60,y-17)*8)+frame*4)%3600];
+				v = (v+4)/8;
+
+				// Modulation par la musique : décalage de l'index
+				let idx = Math.floor(v*(PALETTE.length-1) + level/50) % PALETTE.length;
+				line += PALETTE[idx];
+			}
+			output += line + "\n";
 		}
 		return output;
-	  }
+	}
 
-	  function addStars(asciiFrame){
-		let lines = asciiFrame.split("\n");
-		stars.forEach(s=>{
-		  s.x -= s.z*0.2;
-		  if(s.x<0){ s.x=width; s.y=Math.random()*height; s.z=Math.random()*4+1; }
-		  let row = Math.floor(s.y);
-		  let col = Math.floor(s.x);
-		  if(row>=0 && row<height && col>=0 && col<width){
-			let line = lines[row];
-			lines[row] = line.substring(0,col)+"*"+line.substring(col+1);
-		  }
-		});
-		return lines.join("\n");
-	  }
-
-	  function addRain(asciiFrame){
-		let lines = asciiFrame.split("\n");
-		for(let x=0;x<width;x++){
-		  if(Math.random()<0.05) rainCols[x]=0;
-		  let y = rainCols[x];
-		  if(y>=0 && y<height){
-			let line = lines[y];
-			lines[y] = line.substring(0,x)+Math.floor(Math.random()*2)+line.substring(x+1);
-		  }
-		  rainCols[x]++;
-		  if(rainCols[x]>=height) rainCols[x]=0;
+	  function addStars(asciiFrame, level = 128){
+			let lines = asciiFrame.split("\n");
+			stars.forEach(s=>{
+				// Vitesse modulée par le niveau audio
+				s.x -= s.z*0.2 + level/200;
+				if(s.x<0){ 
+					s.x=width; 
+					s.y=Math.random()*height; 
+					s.z=Math.random()*4+1; 
+				}
+				let row = Math.floor(s.y);
+				let col = Math.floor(s.x);
+				if(row>=0 && row<height && col>=0 && col<width){
+					let line = lines[row];
+					lines[row] = line.substring(0,col)+"*"+line.substring(col+1);
+				}
+			});
+			return lines.join("\n");
 		}
-		return lines.join("\n");
-	  }
 
-	  function addGlitch(asciiFrame){
-		let lines = asciiFrame.split("\n");
-		for(let i=0;i<10;i++){
-		  let y=Math.floor(Math.random()*height);
-		  let x=Math.floor(Math.random()*width);
-		  let line=lines[y];
-		  lines[y]=line.substring(0,x)+String.fromCharCode(33+Math.floor(Math.random()*94))+line.substring(x+1);
+	  function addRain(asciiFrame, level = 128){
+			let lines = asciiFrame.split("\n");
+			for(let x=0;x<width;x++){
+				if(Math.random()<0.05 + level/800) rainCols[x]=0; // plus de points de départ
+				let y = rainCols[x];
+				if(y>=0 && y<height){
+					let line = lines[y];
+					lines[y] = line.substring(0,x)+Math.floor(Math.random()*2)+line.substring(x+1);
+				}
+				rainCols[x] += 1 + Math.floor(level/100); // chute plus rapide si musique forte
+				if(rainCols[x]>=height) rainCols[x]=0;
+			}
+			return lines.join("\n");
 		}
-		return lines.join("\n");
-	  }
+
+	  function addGlitch(asciiFrame, level = 128){
+			let lines = asciiFrame.split("\n");
+			let glitchCount = 10 + Math.floor(level/25); // plus de glitches si musique forte
+			for(let i=0;i<glitchCount;i++){
+				let y=Math.floor(Math.random()*height);
+				let x=Math.floor(Math.random()*width);
+				let line=lines[y];
+				lines[y]=line.substring(0,x)+String.fromCharCode(33+Math.floor(Math.random()*94))+line.substring(x+1);
+			}
+			return lines.join("\n");
+		}
 
 	  scrollDiv.textContent = scrollText;
 		let scrollX = 0;  // position en pixels
@@ -1050,7 +1145,7 @@
 				scrollX = 0;
 			}
 
-			scrollDiv.style.transform = `translateX(${-scrollX}px)`;
+			scrollDiv.style.transform = `translateX(${-scrollX + (audioStarted ? (getAudioLevel()-128)/2 : 0)}px)`;
 
 			// Glitch ponctuel
 			if (Math.random() < 0.02) {
@@ -1116,11 +1211,16 @@
 		// Boucle principale de la démo ASCII
 		function loop() {
 			frame++;
+			
+			const level = audioStarted ? getAudioLevel() : 128; // récupère le niveau audio
 
-			let plasma = generatePlasma();
-			let withStars = addStars(plasma);
-			let withRain = addRain(withStars);
-			let withGlitch = addGlitch(withRain);
+			let plasma = generatePlasma(audioStarted ? getAudioLevel() : 128);
+			////let withStars = addStars(plasma);
+			//let withRain = addRain(withStars);
+			//let withGlitch = addGlitch(withRain);
+			let withStars = addStars(plasma, level);
+			let withRain  = addRain(withStars, level);
+			let withGlitch= addGlitch(withRain, level);
 
 			// Affiche l'ASCII généré
 			screen.textContent = withGlitch;
@@ -1131,6 +1231,27 @@
 
 			// Animation du skull toutes les 10 frames
 			if (frame % 20 === 0) updateSkull();
+			
+			// === MODULATION PAR LA MUSIQUE ===
+			if (audioStarted) {
+				// Exemples simples : tu peux étendre si tu veux
+
+				// Le PLASMA pulse avec l'audio
+				screen.style.opacity = 0.7 + (level / 400);
+
+				// Le SKULL tremble légèrement
+				const dx = (level - 128) / 6;
+				const dy = (Math.random() - 0.5) * level / 60; // tremblement vertical
+				const rot = (Math.random() - 0.5) * level / 500; // rotation légère
+				skull.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}rad)`;
+
+				// Le texte musical pulse
+				for (let i = 0; i < musicText.length; i++) {
+					const span = musicDiv.children[i];
+					const audioEffect = (audioStarted ? getAudioLevel() : 128) / 50;
+					span.style.top = `${Math.floor(2 * Math.sin((frame + i * 2) * 0.1) + audioEffect * Math.sin(frame*0.3 + i))}px`;
+				}
+			}
 
 			requestAnimationFrame(loop);
 		}
