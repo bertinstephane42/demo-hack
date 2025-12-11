@@ -264,7 +264,8 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
 				<div id="scroller"><div id="scrollDiv"></div></div>
 				<pre id="skull" style="position:absolute; top:50%; right:20%; font-size:12px; line-height:12px;"></pre>
 			</div>
-			<button id="backButton">RETOUR</button>
+			<button id="backButton">Retour</button>
+			<button id="pauseBtn">Pause / Play</button>
 			<audio id="hackerAudio"></audio>
 		</div>
 	</div>
