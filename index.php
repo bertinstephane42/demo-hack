@@ -9,16 +9,17 @@ header('X-Frame-Options: SAMEORIGIN');
 header('X-Content-Type-Options: nosniff');
 header('X-XSS-Protection: 1; mode=block');
 // Content-Security-Policy minimal — adapter selon besoins (CDN autorisés pour Bootstrap et polices)
-header("Content-Security-Policy:
-    default-src 'self' https:;
-    script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline';
-    style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com 'unsafe-inline';
-    font-src https://fonts.gstatic.com https://cdn.jsdelivr.net;
-    img-src 'self' data: https://www.gravatar.com https://upload.wikimedia.org;
-");
+$csp = "default-src 'self' https:; "
+     . "script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; "
+     . "style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com 'unsafe-inline'; "
+     . "font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; "
+     . "img-src 'self' data: https://www.gravatar.com https://upload.wikimedia.org;";
+
+header("Content-Security-Policy: $csp");
 
 // Petite logique: détecter environnement (dev/prod) via variable d'environnement
 $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
+require_once __DIR__ . '/rate_limit.php';
 ?><!doctype html>
 <html lang="fr">
 <head>
@@ -285,7 +286,7 @@ $is_prod = getenv('APP_ENV') === 'production' || !empty($_SERVER['HTTP_HOST']);
   <footer class="bg-light py-4 mt-5 border-top">
     <div class="container d-flex justify-content-between align-items-center">
       <div>
-        <a href="https://www.linkedin.com/in/stephane-bertin-cfai/" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/stephane-bertin42/" target="_blank" rel="noopener noreferrer">
 			<strong>Stéphane BERTIN</strong>
 		</a><br>
         <small class="text-muted">© <?= date('Y') ?> — Ressources pédagogiques informatiques</small>
